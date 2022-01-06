@@ -7,9 +7,16 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({User}) {
+    static associate(models) {
       // define association here
-      this.belongsTo(User, {foreignKey: "userId"})
+      models.User.hasMany(models.Comment);
+      models.Post.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: false,
+        },
+        onDelete: "cascade",
+        hooks: true,
+      });
     }
   }
   Post.init(
@@ -18,13 +25,25 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      post_title: DataTypes.STRING,
-      post_content: DataTypes.STRING,
+
+      post_content: {
+        type: DataTypes.STRING,
+        validate: {
+          min: 4,
+          notEmpty: true,
+        },
+      },
       post_file: DataTypes.STRING,
+      userName: {
+        type: DataTypes.STRING,
+        onDelete: "CASCADE",
+      },
     },
+
     {
       sequelize,
       modelName: "Post",
+      paranoid: true,
     }
   );
   return Post;

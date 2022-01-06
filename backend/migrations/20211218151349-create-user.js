@@ -6,12 +6,17 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        onDelete: 'CASCADE',
       },
       uuid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
       username: {
         type: DataTypes.STRING,
         allowNull: false,

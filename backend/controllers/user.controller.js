@@ -31,7 +31,7 @@ module.exports.getOneUser = (req, res) => {
     });
 };
 
-module.exports.updateOne = (req, res) => {
+module.exports.updateOne = async (req, res) => {
   const id = req.params.id;
   User.update(req.body, {
     where: { id: id },

@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("Posts", {
+    await queryInterface.createTable("Comments", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,36 +12,39 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      userId: {
-        type: DataTypes.INTEGER,
+      comment: {
         allowNull: false,
-        references: {
-          model: "Users",
-          key: "id",
-        },
-        onDelete: "CASCADE",
+        type: DataTypes.STRING,
       },
       userName: {
         allowNull: false,
         type: DataTypes.STRING,
         onDelete: "CASCADE",
       },
-      post_content: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      postId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Posts",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
-      post_file: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        onDelete: "CASCADE"
+      userId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
+
       createdAt: {
-        type: DataTypes.DATE,
         allowNull: false,
+        type: DataTypes.DATE,
       },
       updatedAt: {
-        type: DataTypes.DATE,
         allowNull: false,
+        type: DataTypes.DATE,
       },
       deletedAt:{
         allowNull: true,
@@ -50,6 +53,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable("Posts");
+    await queryInterface.dropTable("Comments");
   },
 };

@@ -9,6 +9,10 @@
       margin: 2px 0 0 -9px;
     }
 
+    .icons-bis img{
+      width: 2vw;
+    }
+
     .icons-bis {
       position: absolute;
       left: 10px;
@@ -23,8 +27,8 @@
           transform-origin: center;
           z-index: -10;
           content: "";
-          height: 45px;
-          width: 45px;
+          height: 25px;
+          width: 25px;
           position: absolute;
           background: $color-4;
           border-radius: 50px;
@@ -55,12 +59,12 @@
 
         &::after {
           content: "";
-          height: 40px;
+          height: 25px;
           width: 5px;
           position: absolute;
           background: $color-1;
           left: -7px;
-          bottom: 8px;
+          bottom: 5px;
           border-radius: 40px;
           transform: scaleY(0);
           animation: scale 1.5s ease forwards;

@@ -16,91 +16,25 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
-  // const {userName, post_content} = req.body
-  // const 
+  try {
+    const user = await User.findOne({
+      where: { id: req.body.userId },
+    });
 
-  // const newPost = {
-  //   userName: userName,
-  //   post_content: post_content
-  // }
-  // Post.create(newPost)
-  // .then(()=>{
-  //   const msg = "post créer"
-  //   res.status(200).json({msg})
-  // })
-  // .catch((err)=> res.status(500).json(err))
+    const post = {
+      userId: req.body.userId,
+      post_content: req.body.post_content,
+      post_file: post_file,
+    };
 
-} 
-// const content = req.body.post_content;
-// const userId = req.params.id;
-
-// await User.findOne({
-//   where: { id: userId },
-// })
-//   .then(async function (user) {
-//     if (user) {
-//       let user = await User.findOne({ where: { id: userId } });
-//       let newPost = await Post.create({
-//         content: content,
-//         userId: user.id,
-//         userName: user.username,
-//       });
-//       return res.status(201).json({ newPost: newPost });
-//     } else {
-//       res.status(404).json({ error: "Utilisateur introuvable" });
-//     }
-//   })
-//   .catch(function (err) {
-//     return res.status(500).json({ error: err });
-//   });
-
-// Post.create(req.body)
-//   .then((post) => {
-//     const message = `Le post a bien été crée.`;
-//     res.json({ message, data: post });
-//   })
-//   .catch((error) => {
-//     const message =
-//       "Le post n'a pas pu être récupéré. Réessayez dans quelques instants.";
-//     res.status(500).json({ message, data: error });
-//   });
-// };
-// const post_title = _req.body.post_title;
-// const post_content = _req.body.post_content;
-
-//  User.findOne({
-//   where: { userId: user.id },
-// })
-//   .then(async function (user) {
-//     if (user) {
-//       let user =  User.findOne({ where: { userId: user.id } });
-//       let newPost =  Post.create({
-//         post_title: post_title,
-//         post_content: post_content,
-
-//         UserId: user.id,
-//       });
-//       return res.status(201).json({ newPost: newPost });
-//     } else {
-//       res.status(404).json({ error: "Utilisateur introuvable" });
-//     }
-//   })
-//   .catch(function (err) {
-//     return res.status(500).json({ error: err });
-//   });
-
-//   const { userUuid, post_title, post_content } = req.body;
-//   try {
-//     const user = await User.findOne({ where: { uuid: userUuid } });
-
-//     const post = await Post.create({
-//       post_title: post_title,
-//       post_content: post_content,
-//       userId: user.id,
-//     });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json(err);
+    Post.create(post).then((data) => {
+      const msg = "post crée";
+      res.status(201).json({ msg, data });
+    });
+  } catch (error) {
+    res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
+  }
+};
 
 module.exports.updatePost = (req, res) => {
   const id = req.params.id;

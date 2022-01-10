@@ -47,7 +47,7 @@ module.exports.signUp = async (req, res) => {
         return res.status(400).json({ error: "l'email n'est pas valide" });
       }
       //Vérification de la longuer de l'username
-      if (req.body.username.length >= 13 || req.body.username.length <= 4) {
+      if (req.body.username.length >= 13 || req.body.username.length <= 3) {
         return res
           .status(400)
           .json({ error: "le pseudo doit comporter entre 4 et 12 caractères" });
@@ -69,7 +69,7 @@ module.exports.signUp = async (req, res) => {
           User.create(user)
             .then((user) => {
               const message = `L'utilisateur ${req.body.username} a été crée avec succès`;
-              res.status(200).json({ message });
+              res.status(201).json({ message, userId: user.id});
             })
             .catch((err) => {
               res.status(500).send({ error: err });
@@ -85,6 +85,31 @@ module.exports.signUp = async (req, res) => {
       res.status(500).json({ message, data: error });
     });
 };
+// module.exports.signUp = (req, res) => {
+//   const email = req.body.email;
+//   const username = req.body.username;
+//   const password = req.body.password;
+
+//   User.findOne({ where: { username: req.body.username } }).then((user) => {
+//     bcrypt.hash(req.body.password, 10).then((hash) => {
+//       const user = {
+//         email: email,
+//         username: username,
+//         password: hash,
+//         isAdmin: 0,
+//       };
+//       User.create(username, email, password)
+//         .then((user) => {
+//           const message = `L'utilisateur ${req.body.username} a été crée avec succès`;
+//           res.status(200).json({ message, user: user.id });
+//         })
+//         .catch((err) => {
+//           const errors = signUpErrors(err);
+//           res.status(200).send({ errors });
+//         });
+//     });
+//   });
+// };
 
 //login user
 module.exports.signIn = (req, res) => {

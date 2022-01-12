@@ -14,7 +14,8 @@ module.exports = {
       },
       userId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+       allowNull: true,
+       champ:"id_user",
         references: {
           model: "Users",
           key: "id",
@@ -33,7 +34,7 @@ module.exports = {
       post_file: {
         type: DataTypes.STRING,
         allowNull: true,
-        onDelete: "CASCADE"
+        onDelete: "CASCADE",
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -43,10 +44,10 @@ module.exports = {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      deletedAt:{
+      deletedAt: {
         allowNull: true,
-        type: DataTypes.DATE
-      }
+        type: DataTypes.DATE,
+      },
     });
   },
   down: async (queryInterface, DataTypes) => {

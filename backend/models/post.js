@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.User.hasMany(models.Comment);
       models.Post.belongsTo(models.User, {
-        foreignKey: {
-          allowNull: false,
-        },
+        foreignKey: "userId",
+          
+        
         onDelete: "cascade",
-        hooks: true,
+        
       });
     }
   }

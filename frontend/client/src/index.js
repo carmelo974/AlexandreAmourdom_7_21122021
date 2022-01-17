@@ -21,6 +21,7 @@ const store = createStore(
 
 store.dispatch(getUsers());
 
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

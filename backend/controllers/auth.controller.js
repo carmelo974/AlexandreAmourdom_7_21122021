@@ -131,6 +131,11 @@ module.exports.signIn = (req, res) => {
             return res.status(401).json({ message, data: user });
           }
 
+          // res.status(200).json({
+          //   userId: user.id,
+          //   token: "TOKEN"
+          // })
+
           //JWT
           const token = jwt.sign(
             { userId: user.id },
@@ -141,16 +146,17 @@ module.exports.signIn = (req, res) => {
           );
 
           // const message = `L'utilisateur a été connecté avec succès`;
-          res.cookie(
-            "jwt",
-            // user.id,
-            token,
+          // res.cookie(
+          //   "jwt",
+          //   // user.id,
+          //   token,
 
-            { httpOnly: true, maxAge }
-          );
+          //   { httpOnly: true, maxAge }
+          // );
 
           res.json({ userId: user.id, token });
-        });
+        })
+        .catch(error => res.status(500).json({error}))
     })
     .catch((error) => {
       const message = `L'utilisateur n'a pas pu être connecté`;

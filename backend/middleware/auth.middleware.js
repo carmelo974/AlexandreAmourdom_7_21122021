@@ -1,19 +1,20 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
+require("dotenv").config();
 
-module.exports.checkUser = (req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'SECRET_PASS_TOKEN');
-    const userId = decodedToken.userId;
-    if (req.body.userId && req.body.userId !== userId) {
-      throw 'Invalid UserId';
-    } else {
-      next();
-    }
-  } catch {
-    res.status(404).json({ error: new Error('Invalid Request') });
-  }
+// module.exports = (req, res, next) => {
+//   try {
+//     const token = req.headers.authorization.split(' ')[1];
+//     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+//     const userId = decodedToken.userId;
+//     if (req.body.userId && req.body.userId !== userId) {
+//       throw 'Invalid UserId';
+//     } else {
+//       next();
+//     }
+//   } catch {
+//     res.status(404).json({ error: new Error('Invalid Request') });
+//   }
   //   // try {
   //   //     // récupération du token dans le header de la requête
   //   //     const token = req.headers.authorization.split(" ")[1];
@@ -48,7 +49,7 @@ module.exports.checkUser = (req, res, next) => {
   //   res.locals.user = null;
   //   next();
   // }
-};
+// };
 
 // module.exports.requireAuth = (req, res, next) => {
 //   const token = req.cookies.jwt;
@@ -67,3 +68,27 @@ module.exports.checkUser = (req, res, next) => {
 //     console.log("No token");
 //   }
 // };
+module.exports = (req, res, next) => {
+  const authorizationHeader = req.headers.authorization;
+
+  if (!authorizationHeader) {
+    const message = `Vous n'avez pas fourni de jeton d'authentification. Ajoutez-en un dans l'en-tête de la requête.`;
+    return res.status(401).json({ message });
+  }
+
+  const token = authorizationHeader.split(" ")[1];
+  const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET, (error, decodedToken) => {
+    if (error) {
+      const message = `L'utilisateur n'est pas autorisé à accèder à cette ressource.`;
+      return res.status(401).json({ message, data: error });
+    }
+
+    const userId = decodedToken.userId;
+    if (req.body.userId && req.body.userId !== userId) {
+      const message = `L'identifiant de l'utilisateur est invalide.`;
+      res.status(401).json({ message });
+    } else {
+      next();
+    }
+  });
+};

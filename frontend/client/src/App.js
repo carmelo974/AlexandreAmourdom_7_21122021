@@ -3,7 +3,8 @@ import Routes from "./components/Routes";
 import { UidContext } from "./components/AppContext";
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.actions";
-
+import Profil from "./pages/Profil";
+import { Route } from "react-router-dom";
 
 const App = () => {
   const [uid, setUid] = useState(null);
@@ -23,8 +24,9 @@ const App = () => {
 
   return (
     <UidContext.Provider value={uid}>
-      <Routes />
-      
+      <Routes>
+        <Route path="/profil" element={<Profil />} />
+      </Routes>
     </UidContext.Provider>
   );
 };

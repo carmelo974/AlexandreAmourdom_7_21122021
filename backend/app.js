@@ -8,15 +8,18 @@ const { sequelize } = require("./models");
 require("dotenv").config({ path: "./config/.env" });
 // const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 
+//sécurité
+const helmet = require('helmet'); // sécurise les informations présentes dans le Header
+
 
 
 const app = express();
 
-app.use(cors());
+app.use(helmet());
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cors());
+
+
 
 app.use((_req, res, next) => {
   // ressoures partagées depuis tte les origines
@@ -34,10 +37,9 @@ app.use((_req, res, next) => {
   next();
 });
 
-// app.get("*", checkUser);
-// app.get("/jwtid", requireAuth, (req, res) => {
-//   res.status(200).send(res.locals.userId);
-// });
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);

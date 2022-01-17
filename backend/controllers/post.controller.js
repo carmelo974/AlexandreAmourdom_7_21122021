@@ -1,9 +1,10 @@
 const { User, Post } = require("../models");
+const jwtUtils = require("../utils/jwt.utils");
 // const user = require("../models/user");
 // const models = require("../models");
 
 module.exports.getAll = (req, res) => {
-  Post.findAll({include : User}) // retourne tous les post et les user associés à chaque post
+  Post.findAll({ include: User }) // retourne tous les post et les user associés à chaque post
     .then((post) => {
       const message = "La liste des posts a bien été récupérée.";
       res.json({ message, data: post });
@@ -15,69 +16,109 @@ module.exports.getAll = (req, res) => {
     });
 };
 
-module.exports.createPost = (req, res) => {
-  const post_content = req.body.post_content;
-  const userId = req.body.userId;
-  console.log("id " + req.body.userId);
-
-  if (post_content === null) {
-    return res
-      .status(400)
-      .send({ message: "Votre post ne peut pas être vide" });
-  }
-
-  const post = {
-    userId: userId,
-    post_content: post_content,
-  };
-
-  Post.create(post)
-    .then((data) => {
-      const msg = "post crée";
-      res.status(200).json({ msg, data });
-    })
-    .catch((err) => res.status(500).json(err));
-
-  // await User.findOne({
-  //   where: { id: userId },
-  // })
-  //   .then(async function (user) {
-  //     if (user) {
-  //       const user = await User.findOne({ where: { id: userId } });
-  //       const newPost = await Post.create({
-  //         post_content: post_content,
-  //         UserId: user.id,
-  //       });
-  //       return res.status(201).json({ newPost: newPost });
-  //     } else {
-  //       res.status(404).json({ error: "Utilisateur introuvable" });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     return res.status(500).json({ error: "Erreur survenue"});
-  //   });
-
+module.exports.createPost = async (req, res) => {
   // try {
   //   const user = await User.findOne({
-  //     where: { id: req.params.id },
+  //     attributes: ["username", "id"],
+  //     where: { id: req.body.userId},
   //   });
 
-  //   const post = {
-  //     userId: userId,
-  //     post_content: post_content,
+  //   const post = await Post.create({
 
-  //   };
+  //     userId: req.body.userId,
+  //     post_content: req.body.post_content,
 
-  //   Post.create(post)
+  //   });
+  //   console.log(req.body.userId);
+
+  //   post.data = user.data;
+  //   res.status(201).json({ post: post });
+  // } catch (error) {
+  //   return res.status(500).send({ error: "erreur survenue" });
+  // }
+
+  const headerAuth = req.headers["authorization"];
+  const userId = jwtUtils.getUserId(headerAuth);
+  console.log("id " + userId);
+
+  const post_content = req.body.post_content;
+
+  await User.findOne({
+    where: { id: userId },
+  })
+    .then(async function (user) {
+      if (user) {
+        let user = await User.findOne({ where: { id: userId } });
+        let newPost = await Post.create({
+          post_content: post_content,
+          UserId: user.id,
+        });
+        return res.status(201)({ newPost: newPost });
+      } else {
+        res.status(404).json({ error: "Utilisateur introuvable" });
+      }
+    })
+    .catch(function (err) {
+      return res.status(500).json({ error: err });
+    });
+
+  // if (post_content === null) {
+  //   return res
+  //     .status(400)
+  //     .send({ message: "Votre post ne peut pas être vide" });
+  // }
+
+  // const post = {
+  //   UserId: UserId,
+  //   post_content: post_content,
+  // };
+
+  // Post.create(post)
   //   .then((data) => {
   //     const msg = "post crée";
-  //     res.status(201).json({ msg, data });
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  //   res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
-  // }
+  //     res.status(200).json({ msg, data });
+  //   })
+  //   .catch((err) => res.status(500).json(err));
 };
+// await User.findOne({
+//   where: { id: userId },
+// })
+//   .then(async function (user) {
+//     if (user) {
+//       const user = await User.findOne({ where: { id: userId } });
+//       const newPost = await Post.create({
+//         post_content: post_content,
+//         UserId: user.id,
+//       });
+//       return res.status(201).json({ newPost: newPost });
+//     } else {
+//       res.status(404).json({ error: "Utilisateur introuvable" });
+//     }
+//   })
+//   .catch((err) => {
+//     return res.status(500).json({ error: "Erreur survenue"});
+//   });
+
+// try {
+//   const user = await User.findOne({
+//     where: { id: req.params.id },
+//   });
+
+//   const post = {
+//     userId: userId,
+//     post_content: post_content,
+
+//   };
+
+//   Post.create(post)
+//   .then((data) => {
+//     const msg = "post crée";
+//     res.status(201).json({ msg, data });
+//   });
+// } catch (error) {
+//   console.log(error);
+//   res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
+// }
 
 module.exports.updatePost = (req, res) => {
   const id = req.params.id;

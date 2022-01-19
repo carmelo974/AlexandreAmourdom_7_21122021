@@ -41,6 +41,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// const router = express.Router();
+// router.use(express.json())
+// router.use(express.urlencoded({ extended: true }));
+
+const expressJson = express.json(); const bodyParser = express.urlencoded({extended: true}); app.use([expressJson, bodyParser])
+
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);

@@ -3,6 +3,8 @@ const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+require('dotenv').config();
+
 const passwordValidator = require("password-validator");
 const { signUpErrors } = require("../utils/errors.utils");
 

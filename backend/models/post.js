@@ -7,18 +7,16 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({ User }) {
       // define association here
-      models.User.hasMany(models.Comment);
-      models.Post.belongsTo(models.User, {
-        foreignKey: {
-          allowNull: false,
-        },
+      // models.User.hasMany(models.Comment);
+      // models.Post.belongsTo(models.User, {
+      //   foreignKey: {
+      //     allowNull: false,
+      //   },
 
-       
-        
-        
-      });
+      // });
+      this.belongsTo(User, { foreignKey: "userId", as: "user" });
     }
   }
   Post.init(
@@ -30,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
 
       post_content: {
         type: DataTypes.STRING,
-        validate: {
-          min: 4,
-          notEmpty: true,
-        },
+        // validate: {
+        //   min: 4,
+        //   notEmpty: true,
+        // },
       },
       post_file: DataTypes.STRING,
       userName: {

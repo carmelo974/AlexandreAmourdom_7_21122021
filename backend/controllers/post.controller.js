@@ -17,6 +17,18 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
+  // const { userId, post_content } = req.body;
+
+  // try {
+  //   const user = await User.findOne({ where: { id: userId } });
+
+  //   const post = await Post.create({ post_content, userId: user.id });
+  //   return res.json(post);
+  // } catch (err) {
+  //   console.log(err);
+  //   return res.status(500).json(err);
+  // }
+
   // try {
   //   const user = await User.findOne({
   //     attributes: ["username", "id"],
@@ -41,26 +53,52 @@ module.exports.createPost = async (req, res) => {
   const userId = jwtUtils.getUserId(headerAuth);
   console.log("id " + userId);
 
-  const post_content = req.body.post_content;
-
-  await User.findOne({
-    where: { id: userId },
-  })
-    .then(async function (user) {
-      if (user) {
-        let user = await User.findOne({ where: { id: userId } });
-        let newPost = await Post.create({
-          post_content: post_content,
-          UserId: user.id,
-        });
-        return res.status(201)({ newPost: newPost });
-      } else {
-        res.status(404).json({ error: "Utilisateur introuvable" });
-      }
-    })
-    .catch(function (err) {
-      return res.status(500).json({ error: err });
+  try {
+    const user = await User.findOne({
+      where: { id: userId},
     });
+  
+    const post = await Post.create( {
+      userId: userId,
+      post_content: req.body.post_content,
+      userName: user.username
+  
+    });
+  
+    // Post.create(post)
+    // .then((data) => {
+    //   const msg = "post crée";
+    //   res.status(201).json({ msg, data });
+    // });
+    return res.json(post)
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
+  }
+  
+ 
+  // const postFile = req.body.post_file
+
+  // await User.findOne({
+  //   where: { id: userId },
+  // })
+  //   .then(async function (user) {
+  //     if (user) {
+  //       let user = await User.findOne({ where: { id: userId } });
+  //       let newPost = await Post.create({
+  //         post_content: req.body.post_content,
+  //         userId: user.id,
+  //         userName: user.username,
+  //         postFile: postFile
+  //       });
+  //       return res.status(201)({ newPost: newPost });
+  //     } else {
+  //       res.status(404).json({ error: "Utilisateur introuvable" });
+  //     }
+  //   })
+  //   .catch(function (err) {
+  //     return res.status(500).json({ error: err });
+  //   });
 
   // if (post_content === null) {
   //   return res
@@ -69,7 +107,7 @@ module.exports.createPost = async (req, res) => {
   // }
 
   // const post = {
-  //   UserId: UserId,
+  //   userId: userId,
   //   post_content: post_content,
   // };
 
@@ -81,7 +119,7 @@ module.exports.createPost = async (req, res) => {
   //   .catch((err) => res.status(500).json(err));
 };
 // await User.findOne({
-//   where: { id: userId },
+//   where: { id: User },
 // })
 //   .then(async function (user) {
 //     if (user) {
@@ -99,26 +137,6 @@ module.exports.createPost = async (req, res) => {
 //     return res.status(500).json({ error: "Erreur survenue"});
 //   });
 
-// try {
-//   const user = await User.findOne({
-//     where: { id: req.params.id },
-//   });
-
-//   const post = {
-//     userId: userId,
-//     post_content: post_content,
-
-//   };
-
-//   Post.create(post)
-//   .then((data) => {
-//     const msg = "post crée";
-//     res.status(201).json({ msg, data });
-//   });
-// } catch (error) {
-//   console.log(error);
-//   res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
-// }
 
 module.exports.updatePost = (req, res) => {
   const id = req.params.id;

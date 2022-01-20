@@ -28,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
 
       post_content: {
         type: DataTypes.STRING,
-        // validate: {
-        //   min: 4,
-        //   notEmpty: true,
-        // },
+         validate: {
+          min: 4,
+           notEmpty: true,
+         },
       },
       post_file: DataTypes.STRING,
       userName: {

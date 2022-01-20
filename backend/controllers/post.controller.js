@@ -3,16 +3,35 @@ const jwtUtils = require("../utils/jwt.utils");
 // const user = require("../models/user");
 // const models = require("../models");
 
-module.exports.getAll = (req, res) => {
-  Post.findAll({ include: User }) // retourne tous les post et les user associés à chaque post
-    .then((post) => {
-      const message = "La liste des posts a bien été récupérée.";
-      res.json({ message, data: post });
+module.exports.getAll = async (req, res) => {
+  // Post.findAll({ include: User }) // retourne tous les post et les user associés à chaque post
+  //   .then((post) => {
+  //     const message = "La liste des posts a bien été récupérée.";
+  //     res.json({ message, data: post });
+  //   })
+  //   .catch((error) => {
+  //     const message =
+  //       "La liste des posts n'a pas pu être récupérée. Réessayez dans quelques instants";
+  //     res.status(500).json({ message, data: error });
+  //   });
+  // try {
+  //   const posts = await Post.findAll();
+
+  //   return res.json(posts);
+  // } catch (err) {
+  //   return res.status(500).json(err);
+  // }
+  Post.findAll({ include: [{ model: User, as: "user" }] })
+    .then(function (posts) {
+      if (posts) {
+        res.status(200).json({ posts: posts });
+      } else {
+        res.status(404).json({ error: "no post found" });
+      }
     })
-    .catch((error) => {
-      const message =
-        "La liste des posts n'a pas pu être récupérée. Réessayez dans quelques instants";
-      res.status(500).json({ message, data: error });
+    .catch(function (err) {
+      console.log(err);
+      res.status(500).json({ error: err });
     });
 };
 
@@ -55,28 +74,26 @@ module.exports.createPost = async (req, res) => {
 
   try {
     const user = await User.findOne({
-      where: { id: userId},
+      where: { id: userId },
     });
-  
-    const post = await Post.create( {
+
+    const post = await Post.create({
       userId: userId,
       post_content: req.body.post_content,
-      userName: user.username
-  
+      userName: user.username,
     });
-  
+
     // Post.create(post)
     // .then((data) => {
     //   const msg = "post crée";
     //   res.status(201).json({ msg, data });
     // });
-    return res.json(post)
+    return res.json(post);
   } catch (error) {
     console.log(error);
     res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
   }
-  
- 
+
   // const postFile = req.body.post_file
 
   // await User.findOne({
@@ -137,7 +154,6 @@ module.exports.createPost = async (req, res) => {
 //     return res.status(500).json({ error: "Erreur survenue"});
 //   });
 
-
 module.exports.updatePost = (req, res) => {
   const id = req.params.id;
   Post.update(req.body, {
@@ -151,7 +167,7 @@ module.exports.updatePost = (req, res) => {
             "Le post demandé n'existe pas. Réessayez avec un autre identifiant. ";
           return res.status(404).json({ message });
         }
-        const message = `Le post ${post.title} a bien été modifié.`;
+        const message = `Le post a bien été modifié.`;
         res.json({ message, data: post });
       });
     })

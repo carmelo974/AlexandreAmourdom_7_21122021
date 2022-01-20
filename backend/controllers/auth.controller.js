@@ -123,7 +123,7 @@ module.exports.signIn = (req, res) => {
         const message = `L'utilisateur demandé n'existe pas.`;
         return res.status(404).json({ message });
       }
-      console.log(User);
+      // console.log(User);
 
       bcrypt
         .compare(req.body.password, user.password)

@@ -19,6 +19,6 @@ router.put("/:id", userController.updateOne);
 router.delete("/:id", userController.deleteUser);
 
 //upload
-router.post("/upload", upload.single("file"), uploadController.uploadProfil)
+router.post("/upload", upload.single("image"), uploadController.uploadProfil)
 
 module.exports = router;

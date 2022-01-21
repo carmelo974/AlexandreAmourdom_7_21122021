@@ -147,16 +147,7 @@ module.exports.signIn = (req, res) => {
             }
           );
 
-          // const message = `L'utilisateur a été connecté avec succès`;
-          // res.cookie(
-          //   "jwt",
-          //   // user.id,
-          //   token,
-
-          //   { httpOnly: true, maxAge }
-          // );
-
-          res.json({ userId: user.id, token });
+          res.status(200).json({ userId: user.id, token,isAdmin: user.isAdmin });
         })
         .catch(error => res.status(500).json({error}))
     })

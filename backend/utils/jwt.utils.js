@@ -14,7 +14,7 @@ module.exports = {
       try {
         let jwtToken = jwt.verify(token, process.env.TOKEN_SECRET); // vérification si token valide
         if (jwtToken != null) userId = jwtToken.userId; // récupération de userId
-      } catch (err){}
+      } catch (err) {}
     }
     return userId;
   },

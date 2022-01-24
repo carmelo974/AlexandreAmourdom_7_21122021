@@ -16,10 +16,10 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
 
-        // references: {
-        //   model: "Users",
-        //   key: "id",
-        // },
+         references: {
+          model: "Users",
+          key: "id",
+        },
         onDelete: "CASCADE",
       },
       userName: {

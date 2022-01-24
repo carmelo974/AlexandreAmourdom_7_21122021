@@ -41,6 +41,7 @@ module.exports.signUp = async (req, res) => {
   const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
+  const isAdmin = req.body.isAdmin
 
   User.findOne({ where: { username: req.body.username } })
     .then((user) => {

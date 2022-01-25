@@ -1,26 +1,8 @@
 const { User, Post } = require("../models");
 const jwtUtils = require("../utils/jwt.utils");
-// const user = require("../models/user");
-// const models = require("../models");
+const fs = require("fs");
 
 module.exports.getAll = async (req, res) => {
-  // Post.findAll({ include: User }) // retourne tous les post et les user associés à chaque post
-  //   .then((post) => {
-  //     const message = "La liste des posts a bien été récupérée.";
-  //     res.json({ message, data: post });
-  //   })
-  //   .catch((error) => {
-  //     const message =
-  //       "La liste des posts n'a pas pu être récupérée. Réessayez dans quelques instants";
-  //     res.status(500).json({ message, data: error });
-  //   });
-  // try {
-  //   const posts = await Post.findAll();
-
-  //   return res.json(posts);
-  // } catch (err) {
-  //   return res.status(500).json(err);
-  // }
   Post.findAll({ include: [{ model: User, as: "user" }] })
     .then(function (posts) {
       if (posts) {
@@ -38,8 +20,9 @@ module.exports.getAll = async (req, res) => {
 module.exports.createPost = async (req, res) => {
   const headerAuth = req.headers["authorization"];
   const userId = jwtUtils.getUserId(headerAuth);
-  const post_file = req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : "";
-  
+  const post_file = req.file
+    ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+    : "";
 
   try {
     const user = await User.findOne({
@@ -84,25 +67,33 @@ module.exports.updatePost = (req, res) => {
     });
 };
 
-module.exports.deletePost = (req, res) => {
-  Post.findByPk(req.params.id)
-    .then((post) => {
-      if (post === null) {
-        const message =
-          "Le post demandé n'existe pas. Réessayez avec un autre identifiant. ";
-        return res.status(404).json({ message });
+module.exports.deletePost = async (req, res) => {
+  const headerAuth = req.headers["authorization"];
+  const userId = jwtUtils.getUserId(headerAuth);
+  const isAdmin = jwtUtils.getAdmin(headerAuth);
+
+  await User.findOne({ where: { id: userId } }).then(async () => {
+    try {
+      const post = await Post.findOne({ where: { id: req.params.id } });
+      console.log("Post trouvé : ", post);
+
+      if (userId == post.userId || isAdmin === true) {
+        if (post.post_file) {
+          const filename = post.post_file.split(
+            "../client/public/uploads/profil/"
+          )[1];
+          console.log("Filename to Delete: ", filename);
+          fs.unlink(`../client/public/uploads/profil/${filename}`, () => {
+            Post.destroy({ where: { id: req.params.id } });
+            res.status(200).json({ message: "Post et image supprimé" });
+          });
+        }
+      } else {
+        Post.destroy({ where: { id: post.id } });
+        res.status(200).json({ message: "Post supprimé" });
       }
-      const postDeleted = post;
-      return Post.destroy({
-        where: { id: post.id },
-      }).then((_) => {
-        const message = `Le post  a bien été supprimé.`;
-        res.json({ message, data: postDeleted });
-      });
-    })
-    .catch((error) => {
-      const message =
-        "Le post n'a pas pu être supprimé. Réessayez dans quelques instants.";
-      res.status(500).json({ message, data: error });
-    });
+    } catch (error) {
+      return res.status(500).send({ error: "Erreur serveur" });
+    }
+  });
 };

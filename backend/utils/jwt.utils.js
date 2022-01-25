@@ -18,4 +18,15 @@ module.exports = {
     }
     return userId;
   },
+  getAdmin: function (authorization) {
+    let isAdmin = -1;
+    let token = module.exports.parseAuthorization(authorization);
+    if (token != null) {
+      try {
+        let jwtToken = jwt.verify(token, process.env.TOKEN_SECRET);
+        if (jwtToken != null) isAdmin = jwtToken.isAdmin;
+      } catch (err) {}
+    }
+    return isAdmin;
+  },
 };

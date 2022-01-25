@@ -3,7 +3,7 @@ const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const passwordValidator = require("password-validator");
 const { signUpErrors } = require("../utils/errors.utils");
@@ -41,7 +41,7 @@ module.exports.signUp = async (req, res) => {
   const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
-  const isAdmin = req.body.isAdmin
+  const isAdmin = req.body.isAdmin;
 
   User.findOne({ where: { username: req.body.username } })
     .then((user) => {
@@ -50,7 +50,7 @@ module.exports.signUp = async (req, res) => {
         return res.status(400).json({ error: "l'email n'est pas valide" });
       }
       //Vérification de la longuer de l'username
-      if (req.body.username.length >= 13 || req.body.username.length <= 3) {
+      if (req.body.username.length >= 16 || req.body.username.length <= 3) {
         return res
           .status(400)
           .json({ error: "le pseudo doit comporter entre 4 et 12 caractères" });
@@ -72,7 +72,7 @@ module.exports.signUp = async (req, res) => {
           User.create(user)
             .then((user) => {
               const message = `L'utilisateur ${req.body.username} a été crée avec succès`;
-              res.status(201).json({ message, userId: user.id});
+              res.status(201).json({ message, userId: user.id });
             })
             .catch((err) => {
               res.status(500).send({ error: err });
@@ -134,23 +134,20 @@ module.exports.signIn = (req, res) => {
             return res.status(401).json({ message, data: user });
           }
 
-          // res.status(200).json({
-          //   userId: user.id,
-          //   token: "TOKEN"
-          // })
-
           //JWT
           const token = jwt.sign(
-            { userId: user.id },
+            { userId: user.id, isAdmin: user.isAdmin },
             process.env.TOKEN_SECRET,
             {
               expiresIn: "24h",
             }
           );
 
-          res.status(200).json({ userId: user.id, token,isAdmin: user.isAdmin });
+          res
+            .status(200)
+            .json({ userId: user.id, token, isAdmin: user.isAdmin });
         })
-        .catch(error => res.status(500).json({error}))
+        .catch((error) => res.status(500).json({ error }));
     })
     .catch((error) => {
       const message = `L'utilisateur n'a pas pu être connecté`;

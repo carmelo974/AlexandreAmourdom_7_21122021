@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const cookieParser = require("cookie-parser");
+
 const userRoutes = require("./routes/user.routes");
 const postRoutes = require("./routes/post.routes");
 const commentRoutes = require("./routes/comment.routes");
 const { sequelize } = require("./models");
 require("dotenv").config({ path: "./config/.env" });
-// const { checkUser, requireAuth } = require("./middleware/auth.middleware");
+const cookieSession = require("cookie-session");
 
 //sécurité
 const helmet = require("helmet"); // sécurise les informations présentes dans le Header
@@ -16,24 +16,12 @@ const path = require("path");
 
 app.use(helmet());
 
-// app.use(cors());
-
-// app.use((_req, res, next) => {
-//   // ressoures partagées depuis tte les origines
-//   res.setHeader("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
-//   res.setHeader(
-//     // indication des headers utilisés
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-//   );
-//   res.setHeader(
-//     // indication des méthodes autorisées pr les requête http
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-//   );
-//   res.setHeader("Access-Control-Allow-Credentials", "true");
-//   next();
-// });
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
@@ -48,11 +36,33 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
+
+//Cookie-session
+const expiryDate = new Date(Date.now() + 60 * 60 * 1000); //1h
+
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["key1"],
+    cookie: {
+      secure: true,
+      //garantie que le navigateur envoie le cookie sur HTTPS
+      httpOnly: true,
+      /* Garantit que le cookie n’est envoyé que sur HTTP(S), pas au JavaScript du client, 
+      ce qui renforce la protection contre les attaques de type cross-site scripting. */
+      domain: "http://localhost:3000/",
+      expires: expiryDate,
+      //utilise une date d'expitation pour les cookies persistants
+    },
+  })
+);
+
+
 
 // const expressJson = express.json();
 // const bodyParser = express.urlencoded({ extended: true });

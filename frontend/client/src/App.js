@@ -20,7 +20,7 @@ const App = () => {
       console.log(userId);
     }
     if (uid) dispatch(getUser(uid));
-  }, [uid]);
+  }, [uid, dispatch]);
 
   return (
     <UidContext.Provider value={uid}>

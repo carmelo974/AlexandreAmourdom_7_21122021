@@ -10,18 +10,19 @@ const UpdateProfil = () => {
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+  console.log("userData : " + userData);
 
   const handleUpdate = () => {
-    const data = { bio };
+    // const data = { bio };
 
-    dispatch(updateBio(userData.id, data));
+    dispatch(updateBio(userData.id, bio));
     setUpdateForm(false);
   };
 
   return (
     <div className="profil-container">
       <LeftNav />
-      {/* <h1>Profil de {userData.username}</h1> */}
+      <h1>Profil de {userData.username}</h1>
       <div className="update-container">
         <div className="left-part">
           <h3>Photo de profil</h3>
@@ -43,7 +44,7 @@ const UpdateProfil = () => {
               <>
                 <textarea
                   type="text"
-                  placeholder={userData.bio}
+                  // placeholder={userData.bio}
                   defaultValue={userData.bio}
                   onChange={(e) => setBio(e.target.value)}
                 ></textarea>

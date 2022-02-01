@@ -22,7 +22,7 @@ module.exports.getOneUser = (req, res) => {
         return res.status(404).json({ message });
       }
       const message = "Un utilisateur a bien été trouvé.";
-      res.json({ message, data: user });
+      res.json({ message,  user });
     })
     .catch((error) => {
       const message =

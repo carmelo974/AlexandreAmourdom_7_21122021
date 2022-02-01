@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_BIO = "UPDATE_BIO";
@@ -9,7 +10,7 @@ export const getUser = (uid) => {
     return axios
       .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
       .then((res) => {
-        dispatch({ type: GET_USER, payload: res.data });
+        dispatch({ type: GET_USER, payload: res });
       })
       .catch((err) => console.log(err));
   };
@@ -18,7 +19,7 @@ export const getUser = (uid) => {
 export const uploadPicture = (data, id) => {
   return (dispatch) => {
     return axios
-      .post(`${process.env.REACT_APP_API_URL}api/user/upload`, id, data)
+      .post(`${process.env.REACT_APP_API_URL}api/user/upload`, data)
       .then((res) => {
         console.log(res);
         return axios
@@ -32,17 +33,15 @@ export const uploadPicture = (data, id) => {
   };
 };
 
-export const updateBio = (id, data) => {
+export const updateBio = (id, bio) => { // ne fonctionne pa  en dynamique
   return (dispatch) => {
-    return axios
-      .put(`${process.env.REACT_APP_API_URL}api/user/updateOne/`, id, data)
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/1`,
+      data: { bio },
+    })
       .then((res) => {
-        console.log(res);
-        return axios
-          .get(`${process.env.REACT_APP_API_URL}api/user/getOneUser/` + id)
-          .then((res) => {
-            dispatch({ type: UPDATE_BIO, payload: res });
-          });
+        dispatch({ type: UPDATE_BIO, payload: bio });
       })
       .catch((err) => console.log(err));
   };

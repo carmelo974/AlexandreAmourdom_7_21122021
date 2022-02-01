@@ -6,29 +6,28 @@ import { isEmpty } from "./Utils";
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
+
   const dispatch = useDispatch();
-  const posts = useSelector((state)=> state.postReducer)
+  const posts = useSelector((state) => state.postReducer);
 
   useEffect(() => {
     if (loadPost) {
       dispatch(getPosts());
-      setLoadPost(false);
+      setLoadPost(false); // 1 fois le store rempli, ne pas relançer cette action
     }
   }, [loadPost, dispatch]);
 
-  return(
-
-   <div className="thread-container">
-       <ul>
-           {/* {!isEmpty(posts[0]) &&
-           posts.map((post)=>{
-               return <Card post={post} key={post.id}/>
-           })} */}
-           <Card />
-           
-       </ul>
-   </div>
-  )
+  return (
+    <div className="thread-container">
+      <ul>
+        {!isEmpty(posts[0]) &&
+          posts.map((post) => {
+            return <Card post={post} key={post.id} />;
+          })}
+          <Card />
+      </ul>
+    </div>
+  );
 };
 
 export default Thread;

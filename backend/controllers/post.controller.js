@@ -3,7 +3,7 @@ const jwtUtils = require("../utils/jwt.utils");
 const fs = require("fs");
 
 module.exports.getAll = async (req, res) => {
-  Post.findAll({ include: [{ model: User, as: "user" }] })
+  Post.findAll({ include: [{ model: User, as: "user" }] }) // include Comment
     .then(function (posts) {
       if (posts) {
         res.status(200).json({ posts: posts });

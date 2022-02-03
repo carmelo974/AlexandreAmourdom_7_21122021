@@ -10,19 +10,19 @@ const UpdateProfil = () => {
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  console.log("userData : " + userData);
+ console.log(userData.data);
 
   const handleUpdate = () => {
-    // const data = { bio };
+    //  const data = { bio };
 
-    dispatch(updateBio(userData.id, bio));
+    dispatch(updateBio(userData.data.user.id, bio));
     setUpdateForm(false);
   };
 
   return (
     <div className="profil-container">
       <LeftNav />
-      <h1>Profil de {userData.username}</h1>
+      <h1>Profil de {userData.data.user.username}</h1>
       <div className="update-container">
         <div className="left-part">
           <h3>Photo de profil</h3>
@@ -34,7 +34,7 @@ const UpdateProfil = () => {
             <h3>Bio</h3>
             {updateForm === false && (
               <>
-                <p onClick={() => setUpdateForm(!updateForm)}>{userData.bio}</p>
+                <p onClick={() => setUpdateForm(!updateForm)}>{userData.data.user.bio}</p>
                 <button onClick={() => setUpdateForm(!updateForm)}>
                   Modifier votre bio
                 </button>
@@ -52,7 +52,7 @@ const UpdateProfil = () => {
               </>
             )}
           </div>
-          <h4>Membre depuis le : {dateParser(userData.createdAt)}</h4>
+          <h4>Membre depuis le : {dateParser(userData.data.user.createdAt)}</h4>
         </div>
       </div>
     </div>

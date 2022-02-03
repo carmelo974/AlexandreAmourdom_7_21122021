@@ -10,6 +10,7 @@ const Card = ({ post }) => {
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+  console.log(usersData);
 
   const updateItem = () => {
     if (textUpdate) {

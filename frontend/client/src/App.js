@@ -11,7 +11,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const userId = localStorage.getItem("userID");
+    const userId = localStorage.getItem("userId");
 
     if (userId === null) {
       console.log("No Id");

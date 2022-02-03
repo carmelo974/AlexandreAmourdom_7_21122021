@@ -37,7 +37,7 @@ export const updateBio = (id, bio) => { // ne fonctionne pa  en dynamique
   return (dispatch) => {
     return axios({
       method: "put",
-      url: `${process.env.REACT_APP_API_URL}api/user/1`,
+      url: `${process.env.REACT_APP_API_URL}api/user/${id}`,
       data: { bio },
     })
       .then((res) => {

@@ -13,7 +13,7 @@ const Logout = () => {
       
     })
       .then(() => {
-        removeLocalStorage("userID");
+        removeLocalStorage("userId");
         removeLocalStorage("token");
       })
       .catch((err) => console.log(err));

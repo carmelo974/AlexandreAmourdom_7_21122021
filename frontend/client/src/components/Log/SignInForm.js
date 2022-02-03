@@ -21,9 +21,9 @@ const SignInForm = () => {
     })
       .then((res) => {
         let token = res.data.token;
-        let userID = JSON.stringify(res.data.userId); // ou res.data
+        let userId = res.data.userId;
 
-        localStorage.setItem("userID", userID);
+        localStorage.setItem("userId", userId);
         localStorage.setItem("token", token);
         window.location = "/";
       })

@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePost } from "../../actions/post.actions";
 import { dateParser, isEmpty } from "../Utils";
-
+import DeleteCard from "./DeleteCard";
+import CardComment from "./CardComment";
 const Test = (posts) => {
  
-
+  
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdated, setIsUpdated] = useState(false); // modif post
   const [textUpdate, setTextUpdate] = useState(null);
+  const [showComments, setShowComments] = useState(false)
   const dispatch = useDispatch;
+
+ 
 
   const updateItem = async () => {
     if (textUpdate) {
@@ -81,17 +85,20 @@ const Test = (posts) => {
               <div onClick={() => setIsUpdated(true)}>
                 <img src="./img/icons/edit.svg" alt="edit" />
               </div>
+              <DeleteCard id={posts.id} />
             </div>
           )}
           <div className="card-footer">
             <div className="comment-icon">
-              <img src="" alt="commentaire-pic" />
+              <img onClick={() => setShowComments(!showComments)} src="" alt="commentaire-pic" />
               {/* <span>{posts.comments.length}</span> */}
             </div>
             <img src="" alt="share-pic" />
           </div>
+          {showComments && <CardComment post={posts} />}
         </div>
       </ul>
+     
     </div>
   );
 };

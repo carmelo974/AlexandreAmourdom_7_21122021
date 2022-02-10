@@ -4,32 +4,47 @@ import axios from "axios";
 const SignInForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorData, setErrorData] = useState("");
+  const [controlUsername, setControlUsername] = useState("");
+  const [controlPassword, setControlPassword] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
     const usernameError = document.querySelector(".username.error");
     const passwordError = document.querySelector(".password.error");
 
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}api/user/login`,
-      withCredentials: true,
-      data: {
-        username,
-        password,
-      },
-    })
-      .then((res) => {
-        let token = res.data.token;
-        let userId = res.data.userId;
+    usernameError.innerHTML = "";
+    passwordError.innerHTML = "";
 
-        localStorage.setItem("userId", userId);
-        localStorage.setItem("token", token);
-        window.location = "/";
+    // if (username !== controlUsername) {
+    //   usernameError.innerHTML =
+    //     "le pseudo doit comporter entre 4 et 12 caractères";
+    // }
+    // if (password !== controlPassword) {
+    //   passwordError.innerHTML = "Le mot de passe ne correspond pas";
+    // } else 
+      axios({
+        method: "post",
+        url: `${process.env.REACT_APP_API_URL}api/user/login`,
+        withCredentials: true,
+        data: {
+          username,
+          password,
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          let token = res.data.token;
+          let userId = res.data.userId;
+
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("token", token);
+          window.location = "/";
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorData("Vous n'êtes pas inscrit");
+        });
+    
   };
 
   return (
@@ -54,7 +69,8 @@ const SignInForm = () => {
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />
-      <div className="password error"></div>
+      <div className="password error">{errorData}</div>
+
       <br />
       <input type="submit" value="Se connecter" />
     </form>

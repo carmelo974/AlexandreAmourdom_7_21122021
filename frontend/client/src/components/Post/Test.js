@@ -4,6 +4,7 @@ import { updatePost } from "../../actions/post.actions";
 import { dateParser, isEmpty } from "../Utils";
 import DeleteCard from "./DeleteCard";
 import CardComment from "./CardComment";
+import DeleteComment from "./DeleteComment";
 const Test = (posts) => {
  
   
@@ -98,7 +99,7 @@ const Test = (posts) => {
           {showComments && <CardComment post={posts} />}
         </div>
       </ul>
-     
+     <DeleteComment />
     </div>
   );
 };

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addComment, getPosts } from "../../actions/post.actions";
 import { isEmpty, timestampParser } from "../Utils";
 
+import DeleteComment from "./DeleteComment";
+
 const CardComment = ({ post }) => {
   const [comment, setComment] = useState("");
   const usersData = useSelector((state) => state.usersReducer);
@@ -67,6 +69,7 @@ const CardComment = ({ post }) => {
             placeholder="Laisser un commentaire"
           />
           <br />
+          <DeleteComment />
           <input type="submit" value="Envoyer" />
         </form>
       )}

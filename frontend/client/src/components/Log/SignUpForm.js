@@ -8,6 +8,10 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [controlPassword, setControlPassword] = useState("");
+  const [controlEmail, setControlEmail] = useState("");
+  const [controlUsername, setControlUsername] = useState("");
+  const [controlPass, setControlPass] = useState("");
+  const [errorData, setErrorData] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -19,6 +23,23 @@ const SignUpForm = () => {
     );
 
     passwordConfirmError.innerHTML = "";
+    emailError.innerHTML = "";
+    usernameError.innerHTML = "";
+    passwordError.innerHTML = "";
+
+    if (username !== controlUsername) {
+      usernameError.innerHTML =
+        "le pseudo doit comporter entre 4 et 12 caractères";
+    }
+
+    if (email !== controlEmail) {
+      emailError.innerHTML = "Vous devez entrer une adresse mail valide";
+    }
+
+    if (password !== controlPass) {
+      passwordError.innerHTML =
+        "Votre mot de passe doit avoir au moins 10 caractères, avec une majuscule, une minuscule et un chiffre au moins";
+    }
 
     if (password !== controlPassword) {
       passwordConfirmError.innerHTML = "Les mots de passe ne correspondent pas";
@@ -40,6 +61,7 @@ const SignUpForm = () => {
           }
         })
         .catch((err) => console.log(err));
+        setErrorData("Veuillez remplir les champs");
     }
   };
 
@@ -74,6 +96,8 @@ const SignUpForm = () => {
             id="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            // onClick={(e) => setControlEmail(e.target.value)}
+            // value={email}
           />
           <div className="email error"></div>
           <br />
@@ -97,7 +121,7 @@ const SignUpForm = () => {
             onChange={(e) => setControlPassword(e.target.value)}
             value={controlPassword}
           />
-          <div className="password-confirm error"></div>
+          <div className="password-confirm error">{errorData}</div>
           <br />
 
           <input type="submit" value="Valider inscription" />

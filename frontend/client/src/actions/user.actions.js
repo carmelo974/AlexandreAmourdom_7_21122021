@@ -1,9 +1,9 @@
 import axios from "axios";
 
-
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_BIO = "UPDATE_BIO";
+export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
 
 export const getUser = (uid) => {
   return (dispatch) => {
@@ -33,7 +33,8 @@ export const uploadPicture = (data, id) => {
   };
 };
 
-export const updateBio = (id, bio) => { // ne fonctionne pa  en dynamique
+export const updateBio = (id, bio) => {
+  // ne fonctionne pa  en dynamique
   return (dispatch) => {
     return axios({
       method: "put",
@@ -42,6 +43,20 @@ export const updateBio = (id, bio) => { // ne fonctionne pa  en dynamique
     })
       .then((res) => {
         dispatch({ type: UPDATE_BIO, payload: bio });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const deleteAccount = (id) => {
+  return (dispatch) => {
+    return axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_API_URL}api/user/${id}`,
+      data: { id },
+    })
+      .then((res) => {
+        dispatch({ type: DELETE_ACCOUNT, payload: res });
       })
       .catch((err) => console.log(err));
   };

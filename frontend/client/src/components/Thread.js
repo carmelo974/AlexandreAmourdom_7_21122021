@@ -9,7 +9,7 @@ const Thread = () => {
 
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.postReducer);
-   console.log(posts) //.posts[0].id);
+  // console.log(posts.posts[0].userName); //.posts[0].id);
 
   useEffect(() => {
     if (loadPost) {
@@ -21,15 +21,10 @@ const Thread = () => {
   return (
     <div className="thread-container">
       <ul>
-        {!isEmpty(posts[0]) &&
-          posts.map((post) => {
-            return <Card post={post} key={post.id} />;
-          })}
-        <Card />
-        {/* {!isEmpty(posts[0]) &&
-          posts.map((post) => {
-            return <li>{post[2].id}</li>;
-          })} */}
+         {isEmpty(posts[0]) &&
+          posts.posts.map((post) => {
+            return <Card post={post} key={post.id} />
+          })} 
       </ul>
     </div>
   );

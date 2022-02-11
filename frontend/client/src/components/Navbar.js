@@ -24,7 +24,7 @@ const Navbar = () => {
             <li></li>
             <li className="welcome">
               <NavLink exact to="/profil">
-                <h5>Bienvenue {userData.username}</h5>
+                <h5>Bienvenue {userData.data.user.username}</h5>
               </NavLink>
             </li>
             <Logout />

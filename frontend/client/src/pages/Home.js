@@ -17,7 +17,7 @@ const Home = () => {
           {uid ? <NewPostForm /> : <Log signin={true} signup={false} />}
         </div>
         <Thread />
-        <Test />
+         {/* <Test />  */}
       </div>
     </div>
   );

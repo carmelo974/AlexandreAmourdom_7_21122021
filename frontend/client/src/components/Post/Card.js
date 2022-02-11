@@ -6,30 +6,31 @@ import CardComment from "./CardComment";
 import DeleteCard from "./DeleteCard";
 
 const Card = ({ post }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false); // modif post
   const [textUpdate, setTextUpdate] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+   console.log(usersData.data[0].username);
+  // console.log(userData.data.user.username);
 
   const updateItem = () => {
     if (textUpdate) {
       dispatch(updatePost(post.id, textUpdate));
+      
     }
     setIsUpdated(false);
   };
 
   useEffect(() => {
-    !isEmpty(usersData[0]) && setIsLoading(false);
+    !isEmpty(usersData[0]) && setIsLoading(true);
   }, [usersData]);
 
   return (
-    // <li className="card-container" key={post.id}>
-    //   {isLoading ? <i className="fas fa-spinner fa-spin "></i> : <h2>test</h2>}
-    // </li>
-    <li className="card-container">
+    
+    <li className="card-container" key={post.id}>
       {isLoading ? (
         <i className="fas fa-spinner fa-spin"></i>
       ) : (
@@ -40,7 +41,7 @@ const Card = ({ post }) => {
                 !isEmpty(usersData[0]) &&
                 usersData
                   .map((user) => {
-                    if (user.id === post.userId) return user.picture;
+                    if (user.id === post.userId) return user.picture; 
                     else return null;
                   })
                   .join("")
@@ -65,7 +66,7 @@ const Card = ({ post }) => {
               </div>
               <span>{dateParser(post.createdAt)}</span>
             </div>
-            {isUpdated === false && <p>{post.post_content}post</p>}
+            {isUpdated === false && <p>{post.post_content}</p>}
             {isUpdated && (
               <div className="update-post">
                 <textarea
@@ -82,7 +83,7 @@ const Card = ({ post }) => {
             {post.post_file && (
               <img src={post.post_file} alt="card-pic" className="card-pic" />
             )}
-            {userData.id === post.userId && (
+            {userData.data.user.id === post.userId && (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="edit" />
@@ -97,7 +98,7 @@ const Card = ({ post }) => {
                   src="./img/commentaire.png"
                   alt="commentaire-pic"
                 />
-                <span>{post.comments.length}</span>
+                {/* <span>{post.comments.length}</span> */}
               </div>
               <img src="./img/partager.png" alt="share-pic" />
             </div>

@@ -77,3 +77,25 @@ module.exports.deleteUser = (req, res) => {
       res.status(500).json({ message, data: error });
     });
 };
+
+module.exports.uploadPicture= (req,res)=>{
+  const id = req.params.id;
+
+  const userImage = {
+    image: '',
+  };
+
+  if (req.file) {
+    userImage.image = `./uploads/profil/${req.file.filename}`;
+  }
+
+  User.findByPk(id)
+    .then((user) => {
+      user.image = userImage.image;
+      user
+        .save()
+        .then(() => res.status(200).json({ msg: 'image updated' }))
+        .catch((err) => res.status(400).json({ err: err.message }));
+    })
+    .catch((err) => res.status(500).json({ err: err.message }));
+}

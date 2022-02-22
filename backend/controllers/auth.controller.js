@@ -144,6 +144,7 @@ module.exports.signIn = (req, res) => {
           );
 
           res
+            .cookie("jwt", token, { httpOnly: true, maxAge })
             .status(200)
             .json({ userId: user.id, token, isAdmin: user.isAdmin });
         })
@@ -158,7 +159,7 @@ module.exports.signIn = (req, res) => {
 //logout user
 module.exports.logout = (_req, res) => {
   const cookie = "";
-  // res.cookie("jwt", " ", { maxAge: 1 });
+  res.cookie("jwt", " ", { maxAge: 1 });
   res.status(200).json({ cookie });
   res.redirect("/");
 };

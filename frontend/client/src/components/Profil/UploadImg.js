@@ -6,18 +6,16 @@ const UploadImg = () => {
   const [file, setFile] = useState();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
+  console.log(file);
 
   const handlePicture = (e) => {
     e.preventDefault();
-    // const data = {
-    //     username: userData.username,
-    //     file: file,
-    //   };
+    
     const data = new FormData();
-    data.append("name", userData.username);
-    data.append("userId", userData.id);
-    data.append("file", file);
-    dispatch(uploadPicture(data, userData.id));
+    data.append("name", userData.data.user.username);
+    data.append("userId", userData.data.user.id);
+    data.append("File", file);
+    dispatch(uploadPicture(data, userData.data.user.id));
   };
 
   return (
@@ -25,8 +23,8 @@ const UploadImg = () => {
       <label htmlFor="file">Changer votre image</label>
       <input
         type="file"
-        id="file"
-        name="file"
+        id="image"
+        name="image"
         accept=".jpg, .jpeg, .png"
         onChange={(e) => setFile(e.target.files[0])}
       />

@@ -27,14 +27,13 @@ module.exports.createPost = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { id: userId },
-      
     });
 
     const post = await Post.create({
-      // userId: userId,
+      userId: userId,
       post_content: req.body.post_content,
       post_file: post_file,
-      // userName: user.username,
+      userName: user.username,
     });
 
     return res.json(post);

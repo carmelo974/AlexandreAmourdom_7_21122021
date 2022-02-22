@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/auth.controller");
 const userController = require("../controllers/user.controller");
-const uploadController = require("../controllers/upload.controller")
-const auth = require("../middleware/auth.middleware")
-const multer = require("multer")
-const upload = multer()
+// const uploadController = require("../controllers/upload.controller")
+const auth = require("../middleware/auth.middleware");
+const multerUser = require("../middleware/multer-config.user");
+// const upload = multer()
 
 //auth
 router.post("/register", authController.signUp);
@@ -19,6 +19,6 @@ router.put("/:id", userController.updateOne);
 router.delete("/:id", userController.deleteUser);
 
 //upload
-router.post("/upload", upload.single("image"), uploadController.uploadProfil)
+router.put("/upload/:id", multerUser, userController.uploadPicture);
 
 module.exports = router;

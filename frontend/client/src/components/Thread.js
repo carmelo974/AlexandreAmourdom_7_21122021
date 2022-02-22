@@ -10,6 +10,7 @@ const Thread = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.postReducer);
   // console.log(posts.posts[0].userName); //.posts[0].id);
+  console.log(posts);
 
   useEffect(() => {
     if (loadPost) {

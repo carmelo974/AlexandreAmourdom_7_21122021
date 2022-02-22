@@ -12,14 +12,15 @@ const Card = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
+  // const posts = useSelector((state) => state.postReducer);
   const dispatch = useDispatch();
-   console.log(usersData.data[0].username);
-  // console.log(userData.data.user.username);
+  // console.log(usersData);
+  // console.log(posts.posts[1].userId);
+   console.log(usersData.data);
 
   const updateItem = () => {
     if (textUpdate) {
       dispatch(updatePost(post.id, textUpdate));
-      
     }
     setIsUpdated(false);
   };
@@ -29,7 +30,6 @@ const Card = ({ post }) => {
   }, [usersData]);
 
   return (
-    
     <li className="card-container" key={post.id}>
       {isLoading ? (
         <i className="fas fa-spinner fa-spin"></i>
@@ -41,9 +41,9 @@ const Card = ({ post }) => {
                 !isEmpty(usersData[0]) &&
                 usersData
                   .map((user) => {
-                    if (user.id === post.userId) return user.picture; 
-                    else return null;
+                    if (user.id === post.userId) return user.picture;
                   })
+
                   .join("")
               }
               alt="poster-pic"
@@ -53,15 +53,13 @@ const Card = ({ post }) => {
             <div className="card-header">
               <div className="pseudo">
                 <h3>
-                  {
-                    !isEmpty(
-                      usersData[0] &&
-                        usersData.map((user) => {
-                          if (user.id === post.userId) return user.username;
-                          else return null;
-                        })
-                    )
-                  }
+                  {!isEmpty(usersData[0]) &&
+                    usersData.data
+                      .map(() => {
+                        return [0].username;
+                      })
+
+                      .join("")}
                 </h3>
               </div>
               <span>{dateParser(post.createdAt)}</span>

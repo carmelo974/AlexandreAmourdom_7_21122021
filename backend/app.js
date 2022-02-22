@@ -7,6 +7,7 @@ const commentRoutes = require("./routes/comment.routes");
 const { sequelize } = require("./models");
 require("dotenv").config({ path: "./config/.env" });
 const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser")
 
 //sécurité
 const helmet = require("helmet"); // sécurise les informations présentes dans le Header
@@ -16,20 +17,23 @@ const path = require("path");
 
 app.use(helmet());
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin",process.env.CLIENT_URL);
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+//   );
+//   next();
+// });
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
-  allowedHeaders: ["sessionId", "Content-Type"],
-  exposedHeaders: ["sessionId"],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false,
+  allowedHeaders: ["Authorization", "Content-Type"],
 };
 
 app.use(cors(corsOptions));
@@ -41,6 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 //Cookie-session
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000); //1h
@@ -61,8 +66,6 @@ app.use(
     },
   })
 );
-
-
 
 // const expressJson = express.json();
 // const bodyParser = express.urlencoded({ extended: true });

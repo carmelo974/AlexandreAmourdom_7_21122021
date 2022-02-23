@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.actions";
 import Profil from "./pages/Profil";
 import { Route } from "react-router-dom";
+// import Home from "./pages/Home"
 
 const App = () => {
   const [uid, setUid] = useState(null);
@@ -26,6 +27,7 @@ const App = () => {
     <UidContext.Provider value={uid}>
       <Routes>
         <Route path="/profil" element={<Profil />} />
+        {/* <Route path="/" exact component={<Home />} /> */}
       </Routes>
     </UidContext.Provider>
   );

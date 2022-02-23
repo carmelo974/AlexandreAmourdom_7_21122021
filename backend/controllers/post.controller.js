@@ -1,12 +1,17 @@
-const { User, Post } = require("../models");
+const { User, Post, Comment } = require("../models");
 const jwtUtils = require("../utils/jwt.utils");
 const fs = require("fs");
 
 module.exports.getAll = async (req, res) => {
-  Post.findAll({ include: [{ model: User, as: "user" }] }) // include Comment
+  Post.findAll({
+    include: [
+      { model: User, as: "user" },
+      // { model: Comment, as: "comments" },
+    ],
+  }) // include Comment
     .then(function (posts) {
       if (posts) {
-        res.status(200).json({ posts: posts });
+        res.status(200).json(posts);
       } else {
         res.status(404).json({ error: "no post found" });
       }

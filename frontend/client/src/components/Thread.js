@@ -8,9 +8,9 @@ const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
 
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.postReducer);
+  const {posts} = useSelector((state) => state.postReducer);
   // console.log(posts.posts[0].userName); //.posts[0].id);
-  console.log(posts);
+  console.log("retour des posts " , posts);
 
   useEffect(() => {
     if (loadPost) {
@@ -22,8 +22,8 @@ const Thread = () => {
   return (
     <div className="thread-container">
       <ul>
-         {isEmpty(posts[0]) &&
-          posts.posts.map((post) => {
+         {
+          posts.map((post) => {
             return <Card post={post} key={post.id} />
           })} 
       </ul>

@@ -10,6 +10,7 @@ const CardComment = ({ post }) => {
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+  console.log(post);
 
   const handleComment = (e) => {
     e.preventDefault();

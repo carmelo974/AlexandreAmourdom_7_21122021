@@ -22,7 +22,7 @@ module.exports.getOneUser = (req, res) => {
         return res.status(404).json({ message });
       }
       const message = "Un utilisateur a bien été trouvé.";
-      res.json({ message,  user });
+      res.json({ message, user });
     })
     .catch((error) => {
       const message =
@@ -78,24 +78,24 @@ module.exports.deleteUser = (req, res) => {
     });
 };
 
-module.exports.uploadPicture= (req,res)=>{
+module.exports.uploadPicture = (req, res) => {
   const id = req.params.id;
 
   const userImage = {
-    image: '',
+    picture: "",
   };
 
   if (req.file) {
-    userImage.image = `./uploads/profil/${req.file.filename}`;
+    userImage.picture = `./uploads/profil/${req.file.filename}`;
   }
 
   User.findByPk(id)
     .then((user) => {
-      user.image = userImage.image;
+      user.picture = userImage.picture;
       user
         .save()
-        .then(() => res.status(200).json({ msg: 'image updated' }))
-        .catch((err) => res.status(400).json({ err: err.message }));
+        .then(() => res.status(200).json({ msg: "image updated" }))
+        .catch((error) => res.status(400).json({ error }));
     })
-    .catch((err) => res.status(500).json({ err: err.message }));
-}
+    .catch((error) => res.status(500).json({ error }));
+};

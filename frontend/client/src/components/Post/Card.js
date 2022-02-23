@@ -16,7 +16,8 @@ const Card = ({ post }) => {
   const dispatch = useDispatch();
   // console.log(usersData);
   // console.log(posts.posts[1].userId);
-   console.log(usersData.data);
+   console.log("usersData card" ,usersData.data);
+   console.log(post);
 
   const updateItem = () => {
     if (textUpdate) {

@@ -142,13 +142,14 @@ module.exports.signIn = (req, res) => {
               expiresIn: "24h",
             }
           );
-
+            
           res
             .cookie("jwt", token, { httpOnly: true, maxAge })
             .status(200)
             .json({ userId: user.id, token, isAdmin: user.isAdmin });
         })
         .catch((error) => res.status(500).json({ error }));
+        console.log(res);
     })
     .catch((error) => {
       const message = `L'utilisateur n'a pas pu être connecté`;

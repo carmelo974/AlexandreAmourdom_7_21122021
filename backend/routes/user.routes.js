@@ -13,10 +13,10 @@ router.post("/login", authController.signIn);
 router.get("/logout", authController.logout);
 
 //user
-router.get("/", userController.getAllUsers);
-router.get("/:id", userController.getOneUser);
-router.put("/:id", userController.updateOne);
-router.delete("/:id", userController.deleteUser);
+router.get("/", auth, userController.getAllUsers);
+router.get("/:id", auth, userController.getOneUser);
+router.put("/:id", auth, userController.updateOne);
+router.delete("/:id", auth, userController.deleteUser);
 
 //upload
 router.put("/upload/:id", multerUser, userController.uploadPicture);

@@ -33,15 +33,18 @@ module.exports.getOneUser = (req, res) => {
 
 module.exports.updateOne = async (req, res) => {
   const id = req.params.id;
+
   User.update(req.body, {
     where: { id: id },
   })
     .then((_) => {
       return User.findByPk(id).then((user) => {
         //return permet de gérer l'erreur 500 du dernier bloc catch pr éviter de dupliquer 2 blocs catch
+        userImage.picture = `./uploads/profil/${req.file.filename}`;
         if (user === null) {
           const message =
             "L'utilisateur demandé n'existe pas. Réessayez avec un autre identifiant. ";
+
           return res.status(404).json({ message });
         }
         const message = `L'utilisateur ${user.username} a bien été modifié.`;

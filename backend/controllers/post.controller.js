@@ -13,11 +13,10 @@ module.exports.getAll = async (req, res) => {
       if (posts) {
         res.status(200).json(posts);
       } else {
-        res.status(404).json({ error: "no post found" });
+        res.status(404).json({ error: "aucun post trouvé" });
       }
     })
     .catch(function (err) {
-      console.log(err);
       res.status(500).json({ error: err });
     });
 };
@@ -38,12 +37,10 @@ module.exports.createPost = async (req, res) => {
       userId: userId,
       post_content: req.body.post_content,
       post_file: post_file,
-      userName: user.username,
     });
 
     return res.json(post);
   } catch (error) {
-    console.log(error);
     res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
   }
 };
@@ -75,30 +72,35 @@ module.exports.updatePost = (req, res) => {
 module.exports.deletePost = async (req, res) => {
   const headerAuth = req.headers["authorization"];
   const userId = jwtUtils.getUserId(headerAuth);
-  const isAdmin = jwtUtils.getAdmin(headerAuth);
+  // const authorizationHeader = req.headers.authorization;
+  const decodedToken = headerAuth.split(" ")[1];
+  const userAdmin = decodedToken.userId
 
-  await User.findOne({ where: { id: userId } }).then(async () => {
-    try {
-      const post = await Post.findOne({ where: { id: req.params.id } });
-      console.log("Post trouvé : ", post);
+  await User.findOne({
+    where: { id: userId },
+  })
 
-      if (userId == post.userId || isAdmin === true) {
-        if (post.post_file) {
-          const filename = post.post_file.split(
-            "../client/public/uploads/profil/"
-          )[1];
-          console.log("Filename to Delete: ", filename);
-          fs.unlink(`../client/public/uploads/profil/${filename}`, () => {
-            Post.destroy({ where: { id: req.params.id } });
-            res.status(200).json({ message: "Post et image supprimé" });
+    .then(async () => {
+      try {
+        const post = await Post.findOne({ where: { id: req.params.id } });
+        console.log("log de userId: ", userId);
+        console.log("log de post.userId: ", post.userId);
+        console.log("log admin: ", userAdmin);
+
+        if (userId == post.userId || userAdmin === true ) {
+          const filename = post.post_file.split("/images/")[1];
+          fs.unlink(`images/${filename}`, () => {
+            post.destroy();
+            return res.json({ message: "Post supprimé" });
           });
+        } else {
+          res.status(404).json({ error: "Vous n'êtes pas autorisé" });
         }
-      } else {
-        Post.destroy({ where: { id: post.id } });
-        res.status(200).json({ message: "Post supprimé" });
+      } catch (err) {
+        return res.status(500).json({ err: "erreur serveur" });
       }
-    } catch (error) {
-      return res.status(500).send({ error: "Erreur serveur" });
-    }
-  });
+    })
+    .catch(function (err) {
+      return res.status(500).json({ error: err });
+    });
 };

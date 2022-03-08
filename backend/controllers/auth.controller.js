@@ -149,7 +149,7 @@ module.exports.signIn = (req, res) => {
             .json({ userId: user.id, token, isAdmin: user.isAdmin });
         })
         .catch((error) => res.status(500).json({ error }));
-        console.log(res);
+        
     })
     .catch((error) => {
       const message = `L'utilisateur n'a pas pu être connecté`;

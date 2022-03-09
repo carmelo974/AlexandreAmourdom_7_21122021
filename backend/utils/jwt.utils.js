@@ -24,7 +24,7 @@ module.exports = {
     if (token != null) {
       try {
         let jwtToken = jwt.verify(token, process.env.TOKEN_SECRET);
-        if (jwtToken != null) isAdmin = jwtToken.isAdmin;
+        if (jwtToken != null) isAdmin = jwtToken;
       } catch (err) {}
     }
     return isAdmin;

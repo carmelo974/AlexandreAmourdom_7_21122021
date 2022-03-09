@@ -43,7 +43,7 @@ module.exports.getById = (req, res) => {
     include: ["user"],
   })
     .then((comment) => {
-      const msg = "Comment found";
+      const msg = "aucun commentaire trouvé";
       res.status(200).json({ msg, data: comment });
     })
     .catch((err) => res.status(400).json({ msg: err.message }));
@@ -67,6 +67,22 @@ module.exports.findAllComment = (req, res) => {
 };
 
 module.exports.deleteComment = (req, res) => {
-  const comment = Comment.destroy({ where: { id: req.params.id } });
-  res.status(200).json({ comment, message: "Commentaire supprimé" });
+  const headerAuth = req.headers["authorization"];
+  const userId = jwtUtils.getUserId(headerAuth);
+  const { isAdmin } = jwtUtils.getAdmin(headerAuth);
+
+  const id = req.params.id;
+
+  Comment.findByPk(id)
+    .then((comment) => {
+      if (userId == comment.userId || isAdmin == true) {
+        comment.destroy();
+        res.status(200).json({  message: "Commentaire supprimé" });
+      } else {
+        res.status(400).json({ error: "Vous n'êtes pas autorisé" });
+      }
+    })
+    .catch(function (error) {
+      return res.status(500).json({ error });
+    });
 };

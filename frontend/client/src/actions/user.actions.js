@@ -7,8 +7,13 @@ export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
 
 export const getUser = (uid) => {
   return (dispatch) => {
-    return axios
-      .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
+    return axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API_URL}api/user/${uid}`,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
       .then((res) => {
         dispatch({ type: GET_USER, payload: res });
       })

@@ -142,14 +142,13 @@ module.exports.signIn = (req, res) => {
               expiresIn: "24h",
             }
           );
-            
+
           res
-            .cookie("jwt", token, { httpOnly: true, maxAge })
+            // .cookie("jwt", token, { httpOnly: true, maxAge })
             .status(200)
             .json({ userId: user.id, token, isAdmin: user.isAdmin });
         })
         .catch((error) => res.status(500).json({ error }));
-        
     })
     .catch((error) => {
       const message = `L'utilisateur n'a pas pu être connecté`;
@@ -159,8 +158,8 @@ module.exports.signIn = (req, res) => {
 
 //logout user
 module.exports.logout = (_req, res) => {
-  const cookie = "";
-  res.cookie("jwt", " ", { maxAge: 1 });
-  res.status(200).json({ cookie });
+  // const cookie = "";
+  // res.cookie("jwt", " ", { maxAge: 1 });
+  res.status(200).json({ message: "déconnecté" });
   res.redirect("/");
 };

@@ -23,18 +23,28 @@ export const getUser = (uid) => {
 
 export const uploadPicture = (data, id) => {
   return (dispatch) => {
-    return axios
-      .put(`${process.env.REACT_APP_API_URL}api/user/upload/${id}`, data)
-      .then((res) => {
-        console.log(res);
-        return axios
-          .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
-          .then((res) => {
-            console.log(res);
-            dispatch({ type: UPLOAD_PICTURE, payload: res.data });
-          });
+    return (
+      axios({
+        method: "put",
+        url: `${process.env.REACT_APP_API_URL}api/user/upload/${id}`,
+        data,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       })
-      .catch((err) => console.log(err));
+        // .put(`${process.env.REACT_APP_API_URL}api/user/upload/${id}`, data)
+
+        .then((res) => {
+          console.log(res);
+          return axios
+            .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
+            .then((res) => {
+              console.log(res);
+              dispatch({ type: UPLOAD_PICTURE, payload: res.data });
+            });
+        })
+        .catch((err) => console.log(err))
+    );
   };
 };
 
@@ -45,6 +55,9 @@ export const updateBio = (id, bio) => {
       method: "put",
       url: `${process.env.REACT_APP_API_URL}api/user/${id}`,
       data: { bio },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then((res) => {
         dispatch({ type: UPDATE_BIO, payload: bio });
@@ -59,6 +72,9 @@ export const deleteAccount = (id) => {
       method: "delete",
       url: `${process.env.REACT_APP_API_URL}api/user/${id}`,
       data: { id },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then((res) => {
         dispatch({ type: DELETE_ACCOUNT, payload: res });

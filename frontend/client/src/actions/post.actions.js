@@ -31,12 +31,21 @@ export const getPosts = () => {
 
 export const addPost = (data, userId) => {
   return (dispatch) => {
-    return axios
-      .post(`${process.env.REACT_APP_API_URL}api/post/`, data)
-      .then((res) => {
-        dispatch({ type: ADD_POST, payload: { data, userId } });
+    return (
+      axios({
+        method: "post",
+        url: `${process.env.REACT_APP_API_URL}api/post/`,
+        data,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       })
-      .catch((err) => console.log(err));
+        // .post(`${process.env.REACT_APP_API_URL}api/post/`, data)
+        .then((res) => {
+          dispatch({ type: ADD_POST, payload: { data, userId } });
+        })
+        .catch((err) => console.log(err))
+    );
   };
 };
 
@@ -46,6 +55,9 @@ export const updatePost = (postId, post_content) => {
       method: "put",
       url: `${process.env.REACT_APP_API_URL}${postId}`,
       data: { post_content },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then((res) => {
         dispatch({ type: UPDATE_POST, payload: { post_content, postId } });
@@ -59,6 +71,9 @@ export const deletePost = (postId) => {
     return axios({
       method: "delete",
       url: `${process.env.REACT_APP_API_URL}${postId}`,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then((res) => {
         dispatch({ type: DELETE_POST, payload: { postId } });
@@ -73,6 +88,9 @@ export const addComment = (postId, userId, comment, commmentUsername) => {
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/comment/${postId}`,
       data: { userId, comment, commmentUsername },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then((res) => {
         dispatch({ type: ADD_COMMENT, payload: { comment, postId } });
@@ -87,6 +105,9 @@ export const deleteComment = (postId, commentId) => {
       method: "delete",
       url: `${process.env.REACT_APP_API_URL}api/comment/${postId}`,
       data: { commentId },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then((res) => {
         dispatch({ type: DELETE_COMMENT, payload: { commentId, postId } });

@@ -51,11 +51,11 @@ module.exports.updateComment = (req, res) => {
       }
       if (userId === comment.userId || isAdmin === true) {
         comment.update(req.body);
-        const message = `Le post a bien été modifié.`;
+        const message = `Le commentaire a bien été modifié.`;
         res.json({ message, data: comment });
       } else {
         const message = "Vous n'êtes pas autorisée";
-        res.status(404).json({ message, data: error });
+        res.status(404).json({ message });
       }
     })
     .catch((error) => {

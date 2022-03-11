@@ -10,12 +10,14 @@ const MIME_TYPES = {
 };
 
 // storage indique a multer où enregister les fichiers images
+
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, "images");
   },
 
   // filename indique à multer d'utiliser le nom d'origine, de remplacer les espaces par des underscores
+
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");
     // dictionnaire type MIME pour résoudre l'extension de fichier appropriée

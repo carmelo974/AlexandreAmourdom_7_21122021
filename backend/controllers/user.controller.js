@@ -82,6 +82,8 @@ module.exports.deleteUser = (req, res) => {
 };
 
 module.exports.uploadPicture = (req, res) => {
+  return res.status(200).json("test");
+  /*
   const id = req.params.id;
 
   const userImage = {
@@ -100,5 +102,5 @@ module.exports.uploadPicture = (req, res) => {
         .then(() => res.status(200).json({ msg: "image updated" }))
         .catch((error) => res.status(400).json({ error }));
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(500).json({ error }));*/
 };

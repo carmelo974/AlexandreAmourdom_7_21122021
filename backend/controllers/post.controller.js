@@ -94,33 +94,33 @@ module.exports.updatePost = async (req, res) => {
   const id = req.params.id;
 
   // changé post.update
-  
-     Post.findByPk(id)
-      .then((post) => {
-        if (post === null) {
-          const message =
-            "Le post demandé n'existe pas. Réessayez avec un autre identifiant. ";
-          return res.status(404).json({ message });
-        }
 
-        //  const post = Post.findOne({ where: { id: req.params.id } });
-        console.log("post: ",post.userId);
-        console.log(userId);
-        if (userId === post.userId || isAdmin === true) {
-          post.update(req.body)
-          const message = `Le post a bien été modifié.`;
-          res.json({ message, data: post });
-        } else {
-          const message = "Vous n'êtes pas autorisée";
-          res.status(404).json({ message, data: error });
-        }
-      })
-      .catch((error) => {
+  Post.findByPk(id)
+    .then((post) => {
+      if (post === null) {
         const message =
-          "Le post n'a pas pu être modifié. Réessayez dans quelques instants.";
-        res.status(500).json({ message, data: error });
-      });
-  
+          "Le post demandé n'existe pas. Réessayez avec un autre identifiant. ";
+        return res.status(404).json({ message });
+      }
+
+      //  const post = Post.findOne({ where: { id: req.params.id } });
+
+      console.log("post: ", post.userId);
+      console.log(userId);
+      if (userId === post.userId || isAdmin === true) {
+        post.update(req.body);
+        const message = `Le post a bien été modifié.`;
+        return res.status(200).json({ message, data: post });
+      } else {
+        const message = "Vous n'êtes pas autorisée";
+        return res.status(401).json({ message });
+      }
+    })
+    .catch((error) => {
+      const message =
+        "Le post n'a pas pu être modifié. Réessayez dans quelques instants.";
+      return res.status(500).json({ message, data: error });
+    });
 };
 
 module.exports.deletePost = async (req, res) => {

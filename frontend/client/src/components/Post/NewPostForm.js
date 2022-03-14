@@ -12,6 +12,7 @@ const NewPostForm = () => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   console.log(userData);
+  console.log(image)
 
   const handlePost = async () => {
     if (post_content || postPicture) {

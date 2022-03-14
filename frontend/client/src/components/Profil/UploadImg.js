@@ -20,6 +20,7 @@ const UploadImg = () => {
     data.append("name", userData.data.user.username);
     data.append("userId", userData.data.user.id);
     data.append("file", file);
+    
     console.log(data);
     console.log(userData.data.user.id);
     dispatch(uploadPicture(data, userData.data.user.id));
@@ -31,10 +32,11 @@ const UploadImg = () => {
       <input
         type="file"
         id="file"
-        name="picture"
+        name="file"
         accept=".jpg, .jpeg, .png"
         //onChange={(e) => setFile(e.target.files[0])}
         onChange={onFileChange}
+        
       />
       <br />
       <input type="submit" value="Envoyer" />

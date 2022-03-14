@@ -23,28 +23,24 @@ export const getUser = (uid) => {
 
 export const uploadPicture = (data, id) => {
   return (dispatch) => {
-    return (
-      axios({
-        method: "put",
-        url: `${process.env.REACT_APP_API_URL}api/user/upload/${id}`,
-        data,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+    return axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}api/user/upload/${id}`,
+      data,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        return axios
+          .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
+          .then((res) => {
+            console.log(res);
+            dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
+          });
       })
-        // .put(`${process.env.REACT_APP_API_URL}api/user/upload/${id}`, data)
-
-        .then((res) => {
-          console.log(res);
-          return axios
-            .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
-            .then((res) => {
-              console.log(res);
-              dispatch({ type: UPLOAD_PICTURE, payload: res.data });
-            });
-        })
-        .catch((err) => console.log(err))
-    );
+      .catch((err) => console.log(err));
   };
 };
 

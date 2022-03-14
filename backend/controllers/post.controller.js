@@ -8,9 +8,10 @@ module.exports.getAll = async (req, res) => {
   Post.findAll({
     include: [
       { model: User, as: "user" },
-      // { model: Comment, as: "comments" },
+       { model: Comment },
     ],
-  }) // include Comment
+     order: [['createdAt','DESC']],
+  })
     .then(function (posts) {
       if (posts) {
         res.status(200).json(posts);
@@ -48,46 +49,6 @@ module.exports.createPost = async (req, res) => {
 };
 
 module.exports.updatePost = async (req, res) => {
-  // const headerAuth = req.headers["authorization"];
-  // const userId = jwtUtils.getUserId(headerAuth);
-  // const id = req.params.id;
-
-  //  await Post.update(req.body, {
-  //   where: { id: id },
-  // })
-  //   .then(async (_) => {
-  //     return Post.findByPk(id).then((post) => {
-  //       //return permet de gérer l'erreur 500 du dernier bloc catch pr éviter de dupliquer 2 blocs catch
-
-  //       try {
-  //         const post =  Post.findOne({ where: { id: req.params.id } });
-  //         console.log(userId);
-  //         console.log(post.userId);
-  //         if (userId == post.userId) {
-  //           const message = `Le post a bien été modifié.`;
-  //           res.json({ message, data: post });
-  //         } else {
-  //           const message = "Vous n'êtes pas autorisée";
-  //           res.status(404).json({ message, data: error });
-  //         }
-  //       } catch (err) {
-  //         return res.status(500).json({ err: "erreur serveur" });
-  //       }
-
-  //       if (post === null) {
-  //         const message =
-  //           "Le post demandé n'existe pas. Réessayez avec un autre identifiant. ";
-  //         return res.status(404).json({ message });
-  //       }
-
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     const message =
-  //       "Le post n'a pas pu être modifié. Réessayez dans quelques instants.";
-  //     res.status(500).json({ message, data: error });
-  //   });
-
   const headerAuth = req.headers["authorization"];
   const userId = jwtUtils.getUserId(headerAuth);
   const { isAdmin } = jwtUtils.getAdmin(headerAuth);

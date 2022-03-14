@@ -1,11 +1,22 @@
-import React from 'react';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteAccount } from "../../actions/user.actions";
 
-const DeleteAccount = () => {
-    return (
-        <div>
-            <button>delete</button>
-        </div>
-    );
+const DeleteProfil = (props) => {
+  const dispatch = useDispatch();
+  const deleteUser = () => dispatch(deleteAccount(props.id));
+
+  return (
+    <div
+      onClick={() => {
+        if (window.confirm("Voulez-vous supprimer ce post ?")) {
+          deleteUser();
+        }
+      }}
+    >
+      <button>delete</button>
+    </div>
+  );
 };
 
-export default DeleteAccount;
+export default DeleteProfil;

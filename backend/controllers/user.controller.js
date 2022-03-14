@@ -40,7 +40,7 @@ module.exports.updateOne = async (req, res) => {
     .then((_) => {
       return User.findByPk(id).then((user) => {
         //return permet de gérer l'erreur 500 du dernier bloc catch pr éviter de dupliquer 2 blocs catch
-        userImage.picture = `./uploads/profil/${req.file.filename}`;
+        userImage.picture = `./images/${req.file.filename}`;
         if (user === null) {
           const message =
             "L'utilisateur demandé n'existe pas. Réessayez avec un autre identifiant. ";
@@ -82,8 +82,8 @@ module.exports.deleteUser = (req, res) => {
 };
 
 module.exports.uploadPicture = (req, res) => {
-  return res.status(200).json("test");
-  /*
+  // return res.status(200).json("test");
+  
   const id = req.params.id;
 
   const userImage = {
@@ -91,7 +91,7 @@ module.exports.uploadPicture = (req, res) => {
   };
 
   if (req.file) {
-    userImage.picture = `./uploads/profil/${req.file.filename}`;
+    userImage.picture = `http://localhost:5000/api/images/${req.file.filename}`;
   }
 
   User.findByPk(id)
@@ -102,5 +102,5 @@ module.exports.uploadPicture = (req, res) => {
         .then(() => res.status(200).json({ msg: "image updated" }))
         .catch((error) => res.status(400).json({ error }));
     })
-    .catch((error) => res.status(500).json({ error }));*/
+    .catch((error) => res.status(500).json({ error }));
 };

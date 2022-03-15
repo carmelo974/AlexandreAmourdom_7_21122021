@@ -46,9 +46,10 @@ module.exports.updateOne = async (req, res) => {
             "L'utilisateur demandé n'existe pas. Réessayez avec un autre identifiant. ";
 
           return res.status(404).json({ message });
+        } else {
+          const message = `L'utilisateur ${user.username} a bien été modifié.`;
+          return res.status(200).json({ message, data: user });
         }
-        const message = `L'utilisateur ${user.username} a bien été modifié.`;
-        res.json({ message, data: user });
       });
     })
     .catch((error) => {
@@ -83,7 +84,7 @@ module.exports.deleteUser = (req, res) => {
 
 module.exports.uploadPicture = (req, res) => {
   // return res.status(200).json("test");
-  
+
   const id = req.params.id;
 
   const userImage = {
@@ -91,7 +92,9 @@ module.exports.uploadPicture = (req, res) => {
   };
 
   if (req.file) {
-    userImage.picture = `http://localhost:5000/api/images/${req.file.filename}`;
+    userImage.picture = `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`;
   }
 
   User.findByPk(id)

@@ -11,7 +11,7 @@ const UpdateProfil = () => {
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  console.log(userData.data);
+  console.log(userData);
 
   const handleUpdate = () => {
     //  const data = { bio };
@@ -23,11 +23,11 @@ const UpdateProfil = () => {
   return (
     <div className="profil-container">
       <LeftNav />
-      <h1>Profil de {userData.data.user.username}</h1>
+      <h1>Profil de {userData.data?.user.username}</h1>
       <div className="update-container">
         <div className="left-part">
           <h3>Photo de profil</h3>
-          <img src={userData.picture} alt="user-pic" />
+          <img src={userData.data.user.picture} alt="user-pic" />
           <UploadImg />
         </div>
         <div className="right-part">

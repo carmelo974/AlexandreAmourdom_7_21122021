@@ -9,12 +9,12 @@ const DeleteProfil = (props) => {
   return (
     <div
       onClick={() => {
-        if (window.confirm("Voulez-vous supprimer ce post ?")) {
+        if (window.confirm("Voulez-vous supprimer votre profil ? Cette action sera irréversible")) {
           deleteUser();
         }
       }}
     >
-      <button>delete</button>
+      <button>Supprimer mon profil</button>
     </div>
   );
 };

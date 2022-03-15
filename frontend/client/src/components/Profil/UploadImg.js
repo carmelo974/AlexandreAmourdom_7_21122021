@@ -19,7 +19,7 @@ const UploadImg = () => {
     const data = new FormData();
     data.append("name", userData.data.user.username);
     data.append("userId", userData.data.user.id);
-    data.append("file", file);
+    data.append("image", file);
     
     console.log(data);
     console.log(userData.data.user.id);
@@ -39,7 +39,7 @@ const UploadImg = () => {
         
       />
       <br />
-      <input type="submit" value="Envoyer" />
+      <input type="submit" value="Envoyer" onClick={handlePicture} />
     </form>
   );
 };

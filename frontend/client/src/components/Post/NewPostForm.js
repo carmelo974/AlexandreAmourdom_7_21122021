@@ -12,7 +12,7 @@ const NewPostForm = () => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   console.log(userData);
-  console.log(image)
+  
 
   const handlePost = async () => {
     if (post_content || postPicture) {
@@ -52,7 +52,7 @@ const NewPostForm = () => {
         <>
           <NavLink exact to="/profil">
             <div className="user-info">
-              <img src={userData.data.user.picure} alt="user-img" />
+              <img src={userData.data.user.picture} alt="user-img" />
             </div>
           </NavLink>
           <div className="post-form">

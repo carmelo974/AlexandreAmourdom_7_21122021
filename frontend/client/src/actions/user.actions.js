@@ -29,16 +29,21 @@ export const uploadPicture = (data, id) => {
       data,
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "multipart/form-data",
       },
     })
-      .then((res) => {
-        console.log(res);
-        return axios
-          .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
-          .then((res) => {
-            console.log(res);
-            dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
-          });
+      .then(() => {
+        return axios({
+          method: "get",
+          url: `${process.env.REACT_APP_API_URL}api/user/${id}`,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "multipart/form-data",
+          },
+        }).then((res) => {
+          console.log(res.data);
+          dispatch({ type: UPLOAD_PICTURE, payload: res.data.user.picture });
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -56,7 +61,7 @@ export const updateBio = (id, bio) => {
       },
     })
       .then((res) => {
-        dispatch({ type: UPDATE_BIO, payload: bio });
+        dispatch({ type: UPDATE_BIO, payload: res.data.user.bio });
       })
       .catch((err) => console.log(err));
   };

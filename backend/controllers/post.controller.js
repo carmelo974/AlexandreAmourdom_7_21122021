@@ -6,11 +6,8 @@ require("dotenv").config();
 
 module.exports.getAll = async (req, res) => {
   Post.findAll({
-    include: [
-      { model: User, as: "user" },
-       { model: Comment },
-    ],
-     order: [['createdAt','DESC']],
+    include: [{ model: User, as: "user" }, { model: Comment }],
+    order: [["createdAt", "DESC"]],
   })
     .then(function (posts) {
       if (posts) {
@@ -54,7 +51,7 @@ module.exports.updatePost = async (req, res) => {
   const { isAdmin } = jwtUtils.getAdmin(headerAuth);
   const id = req.params.id;
 
-  // changé post.update
+  
 
   Post.findByPk(id)
     .then((post) => {
@@ -64,10 +61,6 @@ module.exports.updatePost = async (req, res) => {
         return res.status(404).json({ message });
       }
 
-      //  const post = Post.findOne({ where: { id: req.params.id } });
-
-      console.log("post: ", post.userId);
-      console.log(userId);
       if (userId === post.userId || isAdmin === true) {
         post.update(req.body);
         const message = `Le post a bien été modifié.`;

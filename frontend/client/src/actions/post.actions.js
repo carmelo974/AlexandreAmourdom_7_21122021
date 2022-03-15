@@ -53,13 +53,14 @@ export const updatePost = (postId, post_content) => {
   return (dispatch) => {
     return axios({
       method: "put",
-      url: `${process.env.REACT_APP_API_URL}${postId}`,
+      url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
       data: { post_content },
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
       .then((res) => {
+        console.log(res.data);
         dispatch({ type: UPDATE_POST, payload: { post_content, postId } });
       })
       .catch((err) => console.log(err));
@@ -70,12 +71,13 @@ export const deletePost = (postId) => {
   return (dispatch) => {
     return axios({
       method: "delete",
-      url: `${process.env.REACT_APP_API_URL}${postId}`,
+      url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
       .then((res) => {
+        console.log(res.data);
         dispatch({ type: DELETE_POST, payload: { postId } });
       })
       .catch((err) => console.log(err));

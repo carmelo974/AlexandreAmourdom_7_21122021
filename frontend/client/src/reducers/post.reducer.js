@@ -8,16 +8,20 @@ import {
 const initialState = {};
 
 export default function postReducer(state = initialState, action) {
+  console.log(action.payload);
   switch (action.type) {
     case GET_POSTS:
       return { ...state, posts: action.payload };
     case UPDATE_POST:
       return state.map((post) => {
         if (post.id === action.payload.postId) {
-          return {
-            ...post,
-            post_content: action.payload.post_content,
-          };
+          // return {
+          //   ...state, post: action.paylod
+          // }
+           return {
+             ...post,
+             post_content: action.payload,
+           };
         } else return post;
       });
     case DELETE_POST:

@@ -16,8 +16,8 @@ const Card = ({ post }) => {
   const dispatch = useDispatch();
   // console.log(usersData);
   // console.log(posts.posts[1].userId);
-   console.log("usersData card" ,usersData.data);
-   console.log(post);
+
+  // console.log(post.Comments);
 
   const updateItem = () => {
     if (textUpdate) {
@@ -37,30 +37,17 @@ const Card = ({ post }) => {
       ) : (
         <>
           <div className="card-left">
-            <img
-              src={
-                !isEmpty(usersData[0]) &&
-                usersData
-                  .map((user) => {
-                    if (user.id === post.userId) return user.picture;
-                  })
-
-                  .join("")
-              }
-              alt="poster-pic"
-            />
+            {usersData.data.map((user) => {
+              if (user.id == post.userId) return <img src={user.picture} />;
+            })}
           </div>
           <div className="card-right">
             <div className="card-header">
               <div className="pseudo">
                 <h3>
-                  {!isEmpty(usersData[0]) &&
-                    usersData.data
-                      .map(() => {
-                        return [0].username;
-                      })
-
-                      .join("")}
+                  {usersData.data.map((user) => {
+                    if (user.id == post.userId) return user.username;
+                  })}
                 </h3>
               </div>
               <span>{dateParser(post.createdAt)}</span>
@@ -97,7 +84,7 @@ const Card = ({ post }) => {
                   src="./img/commentaire.png"
                   alt="commentaire-pic"
                 />
-                {/* <span>{post.comments.length}</span> */}
+                {<span>{post.Comments.length}</span>}
               </div>
               <img src="./img/partager.png" alt="share-pic" />
             </div>

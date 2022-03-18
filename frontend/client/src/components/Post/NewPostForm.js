@@ -11,7 +11,6 @@ const NewPostForm = () => {
   const [image, setImage] = useState();
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  console.log(userData);
   
 
   const handlePost = async () => {
@@ -66,7 +65,7 @@ const NewPostForm = () => {
             {post_content || postPicture ? (
               <li className="card-container">
                 <div className="card-left">
-                  <img src={userData.picture} alt="user-pic" />
+                  <img src={userData.data.user.picture} alt="user-pic" />
                 </div>
                 <div className="card-right">
                   <div className="card-header">
@@ -84,7 +83,8 @@ const NewPostForm = () => {
             ) : null}
             <div className="footer-form">
               <div className="icon">
-                <img src="./img/icons/icons8-image-40.png" />
+                <img src="./img/icons/icons8-image-40.png" alt="img-post" />
+
                 <input
                   type="file"
                   id="file-upload"

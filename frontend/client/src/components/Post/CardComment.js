@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, getPosts } from "../../actions/post.actions";
 
-import { dateParser} from "../Utils";
-
-import DeleteComment from "./DeleteComment";
+import { dateParser } from "../Utils";
+import ModifDeleteComment from "./ModifDeleteComment";
 
 const CardComment = ({ post }) => {
   const [comment, setComment] = useState("");
@@ -39,7 +38,6 @@ const CardComment = ({ post }) => {
             <div className="left-part">
               {usersData.data.map((user) => {
                 if (user.id == comment.userId) {
-                  console.log(user.picture);
                   return <img src={user.picture} />;
                 }
               })}
@@ -52,6 +50,7 @@ const CardComment = ({ post }) => {
                 <span>{dateParser(comment.createdAt)}</span>
               </div>
               <p>{comment.comment}</p>
+              <ModifDeleteComment comment={comment} postId={post.id} />
             </div>
           </div>
         );
@@ -66,7 +65,7 @@ const CardComment = ({ post }) => {
             placeholder="Laisser un commentaire"
           />
           <br />
-          <DeleteComment />
+
           <input type="submit" value="Envoyer" />
         </form>
       )}

@@ -8,10 +8,7 @@ module.exports.createComment = async (req, res) => {
   const postId = req.params.id;
   console.log("postId " + postId);
 
-  // if (postId === null) {
-  //   return res.status(400).json({ error: "Paramètre invalide" });
-  // }
-
+  
   const comment = req.body.comment;
 
   await User.findOne({

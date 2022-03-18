@@ -2,6 +2,7 @@ import {
   DELETE_COMMENT,
   DELETE_POST,
   GET_POSTS,
+  MODIF_COMMENT,
   UPDATE_POST,
 } from "../actions/post.actions";
 
@@ -18,14 +19,32 @@ export default function postReducer(state = initialState, action) {
           // return {
           //   ...state, post: action.paylod
           // }
-           return {
-             ...post,
-             post_content: action.payload,
-           };
+          return {
+            ...post,
+            post_content: action.payload,
+          };
         } else return post;
       });
     case DELETE_POST:
       return state.filter((post) => post.id !== action.payload.postId);
+    case MODIF_COMMENT:
+      return state.map((post) => {
+        if (post.id === action.payload.postId) {
+          return {
+            ...post,
+            comments: post.comments.map((comment) => {
+              if (comment.id === action.payload.commentId) {
+                return {
+                  ...comment,
+                  text: action.payload.text,
+                };
+              } else {
+                return comment;
+              }
+            }),
+          };
+        } else return post;
+      });
     case DELETE_COMMENT:
       return state.map((post) => {
         if (post.id === action.payload.postId) {

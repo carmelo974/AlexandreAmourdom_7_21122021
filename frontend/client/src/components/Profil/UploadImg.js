@@ -6,11 +6,9 @@ const UploadImg = () => {
   const [file, setFile] = useState();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
-  console.log(file);
 
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
-    console.log(file);
   };
 
   const handlePicture = (e) => {
@@ -20,7 +18,7 @@ const UploadImg = () => {
     data.append("name", userData.data.user.username);
     data.append("userId", userData.data.user.id);
     data.append("image", file);
-    
+
     console.log(data);
     console.log(userData.data.user.id);
     dispatch(uploadPicture(data, userData.data.user.id));
@@ -36,7 +34,6 @@ const UploadImg = () => {
         accept=".jpg, .jpeg, .png"
         //onChange={(e) => setFile(e.target.files[0])}
         onChange={onFileChange}
-        
       />
       <br />
       <input type="submit" value="Envoyer" onClick={handlePicture} />

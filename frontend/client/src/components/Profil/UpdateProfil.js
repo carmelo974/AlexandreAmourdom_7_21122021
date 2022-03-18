@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LeftNav from "../LeftNav";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
@@ -7,11 +7,12 @@ import { dateParser } from "../Utils";
 import DeleteAccount from "./DeleteAccount";
 
 const UpdateProfil = () => {
-  const [bio, setBio] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  console.log(userData);
+  const [bio, setBio] = useState(userData.data.user.bio);
+
+  console.log(userData.data.user.bio);
 
   const handleUpdate = () => {
     //  const data = { bio };
@@ -35,9 +36,7 @@ const UpdateProfil = () => {
             <h3>Bio</h3>
             {updateForm === false && (
               <>
-                <p onClick={() => setUpdateForm(!updateForm)}>
-                  {userData.data.user.bio}
-                </p>
+                <p onClick={() => setUpdateForm(!updateForm)}>{bio}</p>
                 <button onClick={() => setUpdateForm(!updateForm)}>
                   Modifier votre bio
                 </button>
@@ -48,7 +47,7 @@ const UpdateProfil = () => {
                 <textarea
                   type="text"
                   // placeholder={userData.bio}
-                  defaultValue={userData.data.user.bio}
+                  defaultValue={bio}
                   onChange={(e) => setBio(e.target.value)}
                 ></textarea>
                 <button onClick={handleUpdate}>Valider</button>
@@ -58,7 +57,7 @@ const UpdateProfil = () => {
           <h4>Membre depuis le : {dateParser(userData.data.user.createdAt)}</h4>
         </div>
       </div>
-      <br/>
+      <br />
       <DeleteAccount />
     </div>
   );

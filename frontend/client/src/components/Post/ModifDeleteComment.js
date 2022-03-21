@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteComment, modifComment } from "../../actions/post.actions";
+import { deleteComment, getPosts, modifComment } from "../../actions/post.actions";
 import { UidContext } from "../AppContext";
 
 const ModifDeleteComment = (comment, postId) => {
@@ -13,7 +13,7 @@ const ModifDeleteComment = (comment, postId) => {
   const handleModif = (e) => {
     e.preventDefault();
     if (text) {
-      dispatch(modifComment(postId, comment.id, text));
+      dispatch(modifComment(postId, comment.id, text)).then(()=>dispatch(getPosts()))
       setText("");
       setModif(false);
     }
@@ -29,7 +29,7 @@ const ModifDeleteComment = (comment, postId) => {
     };
     checkAuthor();
   }, [uid, comment.comment.userId]);
-  console.log(comment.comment.comment);
+ 
 
   return (
     <div className="edit-comment">
@@ -48,7 +48,7 @@ const ModifDeleteComment = (comment, postId) => {
             type="text"
             name="text"
             onChange={(e) => setText(e.target.value)}
-            defaultValue={comment.comment.comment.text}
+            defaultValue={comment.comment.comment}
           />
           <br />
           <div className="btn">
@@ -61,7 +61,7 @@ const ModifDeleteComment = (comment, postId) => {
             >
               <img src="./img/icons/trash.svg" alt="poubelle" />
             </span>
-            <input type="submit" value="Valider vos modifications" />
+            <input type="submit" value="Envoyer" />
           </div>
         </form>
       }

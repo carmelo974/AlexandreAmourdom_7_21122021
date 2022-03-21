@@ -82,7 +82,7 @@ module.exports.findAllComment = (req, res) => {
       if (comments) {
         res.status(200).json({ comments: comments });
       } else {
-        res.status(404).json({ error: "no post found" });
+        res.status(404).json({ error: "aucun commentaire trouvé" });
       }
     })
     .catch(function (err) {

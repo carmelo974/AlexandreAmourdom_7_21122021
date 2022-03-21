@@ -12,12 +12,12 @@ const UpdateProfil = () => {
   const dispatch = useDispatch();
   const [bio, setBio] = useState(userData.data.user.bio);
 
-  console.log(userData.data.user.bio);
+  // console.log(userData.data.user.bio);
 
   const handleUpdate = () => {
     //  const data = { bio };
 
-    dispatch(updateBio(userData.data.user.id, bio));
+    dispatch(updateBio(userData.data.user.id, bio))
     setUpdateForm(false);
   };
 

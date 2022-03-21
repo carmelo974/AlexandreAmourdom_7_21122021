@@ -41,7 +41,6 @@ export const uploadPicture = (data, id) => {
             "Content-Type": "multipart/form-data",
           },
         }).then((res) => {
-          console.log(res.data);
           dispatch({ type: UPLOAD_PICTURE, payload: res.data.user.picture });
         });
       })
@@ -61,7 +60,7 @@ export const updateBio = (id, bio) => {
       },
     })
       .then((res) => {
-        dispatch({ type: UPDATE_BIO, payload: res.data.user.bio });
+        dispatch({ type: UPDATE_BIO, payload: bio });
       })
       .catch((err) => console.log(err));
   };

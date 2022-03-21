@@ -21,7 +21,7 @@ export default function postReducer(state = initialState, action) {
           // }
           return {
             ...post,
-            post_content: action.payload,
+            post_content: action.payload.post_content,
           };
         } else return post;
       });

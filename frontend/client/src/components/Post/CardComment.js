@@ -11,7 +11,7 @@ const CardComment = ({ post }) => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   // const comments = useSelector((state)=> state.commentReducer)
-  console.log(userData.data);
+  // console.log(userData.data);
 
   const handleComment = (e) => {
     e.preventDefault();
@@ -20,6 +20,8 @@ const CardComment = ({ post }) => {
       dispatch(addComment(post.id, userData.id, comment, userData.userName))
         .then(() => dispatch(getPosts()))
         .then(() => setComment(""));
+    } else{
+      alert("Veuillez entrer un commentaire");
     }
   };
 

@@ -16,7 +16,7 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
 
-         references: {
+        references: {
           model: "Users",
           key: "id",
         },
@@ -30,6 +30,7 @@ module.exports = {
       post_content: {
         type: DataTypes.STRING,
         allowNull: false,
+        
       },
       post_file: {
         type: DataTypes.STRING,

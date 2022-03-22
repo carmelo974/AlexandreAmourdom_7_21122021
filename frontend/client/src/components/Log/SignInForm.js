@@ -16,13 +16,7 @@ const SignInForm = () => {
     usernameError.innerHTML = "";
     passwordError.innerHTML = "";
 
-    // if (username !== controlUsername) {
-    //   usernameError.innerHTML =
-    //     "le pseudo doit comporter entre 4 et 12 caractères";
-    // }
-    // if (password !== controlPassword) {
-    //   passwordError.innerHTML = "Le mot de passe ne correspond pas";
-    // } else 
+    
       axios({
         method: "post",
         url: `${process.env.REACT_APP_API_URL}api/user/login`,

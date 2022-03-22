@@ -11,14 +11,19 @@ const Thread = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.postReducer);
   // console.log(posts.posts[0].userName); //.posts[0].id);
-  // console.log("retour des posts " , posts);
+  
 
   useEffect(() => {
     if (loadPost) {
+     
       dispatch(getUsers());
       dispatch(getPosts());
       setLoadPost(false); // 1 fois le store rempli, ne pas relançer cette action
     }
+
+    // if (posts){
+    //   console.log(posts);
+    // }
   }, [loadPost, dispatch]);
 
   return (

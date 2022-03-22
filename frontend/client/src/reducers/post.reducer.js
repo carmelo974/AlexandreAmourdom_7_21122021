@@ -9,7 +9,7 @@ import {
 const initialState = {};
 
 export default function postReducer(state = initialState, action) {
-  // console.log(action.payload);
+  
   switch (action.type) {
     case GET_POSTS:
       return { ...state, posts: action.payload };
@@ -29,14 +29,15 @@ export default function postReducer(state = initialState, action) {
       return state.filter((post) => post.id !== action.payload.postId);
     case MODIF_COMMENT:
       return state.map((post) => {
+        console.log(post.Comments);
         if (post.id === action.payload.postId) {
           return {
             ...post,
-            comments: post.comments.map((comment) => {
+            comments: post.Comments.map((comment) => {
               if (comment.id === action.payload.commentId) {
                 return {
                   ...comment,
-                  text: action.payload.text,
+                  comment: action.payload.comment,
                 };
               } else {
                 return comment;
@@ -46,16 +47,21 @@ export default function postReducer(state = initialState, action) {
         } else return post;
       });
     case DELETE_COMMENT:
-      return state.map((post) => {
-        if (post.id === action.payload.postId) {
-          return {
-            ...post,
-            comments: post.comments.filter(
-              (comment) => comment.id !== action.payload.commentId
-            ),
-          };
-        } else return post;
-      });
+      // console.log(state.posts);
+      // return state.posts.map((article) => {
+      //   console.log(article);
+      // });
+    return state.posts.map((post) => {
+      console.log(state);
+      if (post.id === action.payload.postId) {
+        return {
+          ...post,
+          comments: post.comments.filter(
+            (comment) => comment.id !== action.payload.commentId
+          ),
+        };
+      } else return post;
+    });
     default:
       return state;
   }

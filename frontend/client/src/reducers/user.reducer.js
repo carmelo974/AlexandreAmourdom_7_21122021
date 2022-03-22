@@ -8,8 +8,8 @@ import {
 const initialState = {};
 
 export default function userReducer(state = initialState, action) {
-  // console.log(action.payload);
-  // console.log(state);
+  
+   
   switch (action.type) {
     case GET_USER:
       return action.payload;

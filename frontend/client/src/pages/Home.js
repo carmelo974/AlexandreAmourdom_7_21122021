@@ -8,7 +8,9 @@ import Log from "../components/Log";
 import Thread from "../components/Thread";
 
 const Home = () => {
+
   const uid = useContext(UidContext);
+ 
   return (
     <div className="home">
       <LeftNav />

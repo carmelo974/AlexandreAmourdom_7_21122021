@@ -34,6 +34,7 @@ const Card = ({ post }) => {
 
   return (
     <li className="card-container" key={post.id}>
+    
       {isLoading ? (
         <i className="fas fa-spinner fa-spin"></i>
       ) : (
@@ -71,7 +72,7 @@ const Card = ({ post }) => {
             {post.post_file && (
               <img src={post.post_file} alt="card-pic" className="card-pic" />
             )}
-            {userData.data.user.id === post.userId && (
+            {userData && userData.data.user.id === post.userId && (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="edit" />

@@ -12,47 +12,38 @@ export const MODIF_COMMENT = "MODIF_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 
 //errors
-export const GET_POST_ERRORS = "GET_POST_ERRORS"
+export const GET_POST_ERRORS = "GET_POST_ERRORS";
 
 export const getPosts = () => {
   return (dispatch) => {
-    return (
-      axios({
-        method: "get",
-        url: `${process.env.REACT_APP_API_URL}api/post/`,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+    return axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API_URL}api/post/`,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((res) => {
+        dispatch({ type: GET_POSTS, payload: res.data });
       })
-        // .get(`${process.env.REACT_APP_API_URL}api/post/`)
-        .then((res) => {
-          dispatch({ type: GET_POSTS, payload: res.data });
-        })
-        .catch((err) => console.log(err))
-    );
+      .catch((err) => console.log(err));
   };
 };
 
 export const addPost = (data, userId) => {
   return (dispatch) => {
-    return (
-      axios({
-        method: "post",
-        url: `${process.env.REACT_APP_API_URL}api/post/`,
-        data,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+    return axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}api/post/`,
+      data,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((res) => {
+        dispatch({ type: ADD_POST, payload: { data, userId } });
       })
-        
-        .then((res) => {
-          // if(res.data.errors){
-          //   dispatch({type: GET_POST_ERRORS, payload: res.data.errors})
-          // }
-          dispatch({ type: ADD_POST, payload: { data, userId } });
-        })
-        .catch((err) => console.log(err))
-    );
+      .catch((err) => console.log(err));
   };
 };
 
@@ -108,7 +99,7 @@ export const addComment = (postId, userId, comment, commmentUsername) => {
   };
 };
 
-export const modifComment = (commentId, comment) => {
+export const modifComment = (postId,commentId, comment) => {
   return (dispatch) => {
     return axios({
       method: "put",
@@ -119,7 +110,7 @@ export const modifComment = (commentId, comment) => {
       },
     })
       .then((res) => {
-        dispatch({ type: MODIF_COMMENT, payload: { comment, commentId } });
+        dispatch({ type: MODIF_COMMENT, payload: { postId, commentId, comment } });
       })
       .catch((err) => console.log(err));
   };

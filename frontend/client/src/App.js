@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.actions";
 import Profil from "./pages/Profil";
 import { Route } from "react-router-dom";
+import Home from "./pages/Home";
 // import Home from "./pages/Home"
 
 const App = () => {
@@ -18,17 +19,14 @@ const App = () => {
       console.log("No Id");
     } else {
       setUid(userId);
-      console.log(userId);
     }
     if (uid) dispatch(getUser(uid));
   }, [uid, dispatch]);
 
   return (
     <UidContext.Provider value={uid}>
-      <Routes>
-        <Route path="/profil" element={<Profil />} />
-        {/* <Route path="/" exact component={<Home />} /> */}
-      </Routes>
+      <Routes />
+       
     </UidContext.Provider>
   );
 };

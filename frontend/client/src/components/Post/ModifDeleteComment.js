@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteComment,
   getPosts,
   modifComment,
 } from "../../actions/post.actions";
-import { UidContext } from "../AppContext";
 
 const ModifDeleteComment = (comment, postId) => {
   const userData = useSelector((state) => state.userReducer);
@@ -13,10 +12,8 @@ const ModifDeleteComment = (comment, postId) => {
   const [isAuthor, setIsAuthor] = useState(false);
   const [modif, setModif] = useState(false);
   const [text, setText] = useState("");
-  const [errorAutorisation, setErrorAutorisation] = useState("");
-  const uid = useContext(UidContext);
-
- 
+  const [isAdmin, setIsAdmin] = useState(false);
+  // const [controlAdmin, setControlAdmin] = useState("");
 
   const handleModif = (e) => {
     e.preventDefault();
@@ -30,12 +27,24 @@ const ModifDeleteComment = (comment, postId) => {
     }
   };
 
-  const handleDelete = () =>
-    dispatch(deleteComment(comment.comment.id)).then(() =>
-      dispatch(getPosts())
-    );
+  const handleDelete = () => {
+    // const adminError = document.querySelector(".admin .error")
+    if (isAdmin === false) {
+      alert("Vous n'êtes pas autorisé!");
+    } else
+      dispatch(deleteComment(comment.comment.id)).then(() =>
+        dispatch(getPosts())
+      );
+  };
 
   useEffect(() => {
+    const checkAdmin = () => {
+      if (userData.data.user.isAdmin === true) {
+        setIsAdmin(true);
+      }
+    };
+    checkAdmin();
+
     const checkAuthor = () => {
       if (userData.data.user.id === comment.comment.userId) {
         setIsAuthor(true);
@@ -43,16 +52,16 @@ const ModifDeleteComment = (comment, postId) => {
     };
 
     checkAuthor();
-  }, [uid, comment.comment.userId]);
+  }, [comment.comment.userId]);
 
   return (
     <div className="edit-comment">
-      {isAuthor && modif === false && (
+      {(isAuthor && modif === false) | isAdmin && (
         <span onClick={() => setModif(!modif)}>
           <img src="./img/icons/edit.svg" alt="edit" />
         </span>
       )}
-      {isAuthor && modif && (
+      {(isAuthor && modif) | isAdmin && modif && (
         <form action="" onSubmit={handleModif} className="edit-comment-form">
           <label htmlFor="text" onClick={() => setModif(!modif)}>
             Modifier votre commentaire
@@ -77,7 +86,7 @@ const ModifDeleteComment = (comment, postId) => {
             </span>
             <input type="submit" value="Envoyer" />
           </div>
-          <div className="autorisation error">{errorAutorisation}</div>
+          {/* <div className="autorisation error">{errorAutorisation}</div> */}
         </form>
       )}
     </div>

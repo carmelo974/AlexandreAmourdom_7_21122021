@@ -3,18 +3,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteAccount } from "../../actions/user.actions";
 
 const DeleteProfil = () => {
-  
   const userData = useSelector((state) => state.userReducer);
-  const user = userData.data.user.id
-
+  const id = userData.data.user.id;
+  
 
   const dispatch = useDispatch();
-  const deleteUser = () => dispatch(deleteAccount(user));
-  
+
+  const removeLocalStorage = (key) => {
+    localStorage.removeItem(key);
+  };
+
+  const deleteUser = () => {
+    dispatch(deleteAccount(id))
+      .then(() => {
+        removeLocalStorage("userId");
+        removeLocalStorage("token");
+      })
+      .catch((err) => console.log(err));
+    // window.location = "/";
+  };
   return (
     <div
       onClick={() => {
-        if (window.confirm("Voulez-vous supprimer votre profil ? Cette action sera irréversible")) {
+        if (
+          window.confirm(
+            "Voulez-vous supprimer votre profil ? Cette action sera irréversible"
+          )
+        ) {
           deleteUser();
         }
       }}

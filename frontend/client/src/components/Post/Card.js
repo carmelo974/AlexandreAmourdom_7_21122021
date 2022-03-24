@@ -12,16 +12,21 @@ const Card = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
-  // const posts = useSelector((state) => state.postReducer);
-  const dispatch = useDispatch();
-  // console.log(usersData);
-  // console.log(posts.posts[1].userId);
 
-  // console.log(post.Comments);
+  console.log(userData.data.user.id);
+  console.log(post.userId);
+  
+
+  const dispatch = useDispatch();
+  
+
+  
 
   const updateItem = () => {
     if (textUpdate) {
-      dispatch(updatePost(post.id, textUpdate)).then(()=>dispatch(getPosts()))
+      dispatch(updatePost(post.id, textUpdate)).then(() =>
+        dispatch(getPosts())
+      );
     } else {
       alert("entrer msg");
     }
@@ -34,7 +39,6 @@ const Card = ({ post }) => {
 
   return (
     <li className="card-container" key={post.id}>
-    
       {isLoading ? (
         <i className="fas fa-spinner fa-spin"></i>
       ) : (
@@ -49,14 +53,14 @@ const Card = ({ post }) => {
               <div className="pseudo">
                 <h3>
                   {usersData.data.map((user) => {
-                    if (user.id == post.userId) return user.username;
+                    if (user.id === post.userId) return user.username;
                   })}
                 </h3>
               </div>
               <span>{dateParser(post.createdAt)}</span>
             </div>
             {isUpdated === false && <p>{post.post_content}</p>}
-            {isUpdated && (
+            {isUpdated &&  (
               <div className="update-post">
                 <textarea
                   defaultValue={post.post_content}
@@ -72,7 +76,7 @@ const Card = ({ post }) => {
             {post.post_file && (
               <img src={post.post_file} alt="card-pic" className="card-pic" />
             )}
-            {userData && userData.data.user.id === post.userId && (
+            {  (userData.data.user.id === post.userId)  | (userData.data.user.isAdmin === true) &&(
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="edit" />

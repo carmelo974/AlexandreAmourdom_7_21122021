@@ -33,11 +33,19 @@ module.exports.createPost = async (req, res) => {
       where: { id: userId },
     });
 
+   
+
     const post = await Post.create({
       userId: userId,
       post_content: req.body.post_content,
       post_file: post_file,
     });
+
+    //  if(req.file){
+    //   post_file = `./images/${req.file.filename}`
+    // } else{
+    //   post_file = null
+    // }
 
     return res.json(post);
   } catch (error) {

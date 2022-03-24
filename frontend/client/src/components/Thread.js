@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../actions/post.actions";
 import { getUsers } from "../actions/users.actions";
 import Card from "./Post/Card";
-// import { isEmpty } from "./Utils";
+import { isEmpty } from "./Utils";
+
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
 
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.postReducer);
-  // console.log(posts.posts[0].userName); //.posts[0].id);
+ 
   
 
   useEffect(() => {
@@ -21,15 +22,13 @@ const Thread = () => {
       setLoadPost(false); // 1 fois le store rempli, ne pas relançer cette action
     }
 
-    // if (posts){
-    //   console.log(posts);
-    // }
+    
   }, [loadPost, dispatch]);
 
   return (
     <div className="thread-container">
-      <ul>
-        {posts.map((post) => {
+      <ul> 
+        { posts.map((post) => {
           return <Card post={post} key={post.id} />;
         })}
       </ul>

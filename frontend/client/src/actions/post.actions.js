@@ -99,7 +99,7 @@ export const addComment = (postId, userId, comment, commmentUsername) => {
   };
 };
 
-export const modifComment = (postId,commentId, comment) => {
+export const modifComment = (postId, commentId, comment) => {
   return (dispatch) => {
     return axios({
       method: "put",
@@ -110,7 +110,10 @@ export const modifComment = (postId,commentId, comment) => {
       },
     })
       .then((res) => {
-        dispatch({ type: MODIF_COMMENT, payload: { postId, commentId, comment } });
+        dispatch({
+          type: MODIF_COMMENT,
+          payload: { postId, commentId, comment },
+        });
       })
       .catch((err) => console.log(err));
   };

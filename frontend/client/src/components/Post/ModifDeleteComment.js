@@ -28,13 +28,9 @@ const ModifDeleteComment = (comment, postId) => {
   };
 
   const handleDelete = () => {
-    // const adminError = document.querySelector(".admin .error")
-    if (isAdmin === false) {
-      alert("Vous n'êtes pas autorisé!");
-    } else
-      dispatch(deleteComment(comment.comment.id)).then(() =>
-        dispatch(getPosts())
-      );
+    dispatch(deleteComment(comment.comment.id)).then(() =>
+      dispatch(getPosts())
+    );
   };
 
   useEffect(() => {
@@ -56,12 +52,12 @@ const ModifDeleteComment = (comment, postId) => {
 
   return (
     <div className="edit-comment">
-      {(isAuthor && modif === false) | isAdmin && (
+      {(isAuthor || isAdmin) && (
         <span onClick={() => setModif(!modif)}>
           <img src="./img/icons/edit.svg" alt="edit" />
         </span>
       )}
-      {(isAuthor && modif) | isAdmin && modif && (
+      {((isAuthor && modif) || (isAdmin && modif)) && (
         <form action="" onSubmit={handleModif} className="edit-comment-form">
           <label htmlFor="text" onClick={() => setModif(!modif)}>
             Modifier votre commentaire
@@ -77,9 +73,9 @@ const ModifDeleteComment = (comment, postId) => {
           <div className="btn">
             <span
               onClick={() => {
-                if (window.confirm("Voulez-vous supprimer ce commentaire ?")) {
-                  handleDelete();
-                }
+                // if (window.confirm("Voulez-vous supprimer ce commentaire ?")) {
+                handleDelete();
+                // }
               }}
             >
               <img src="./img/icons/trash.svg" alt="poubelle" />

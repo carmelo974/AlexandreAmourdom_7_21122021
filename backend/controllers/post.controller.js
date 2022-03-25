@@ -24,33 +24,32 @@ module.exports.getAll = async (req, res) => {
 module.exports.createPost = async (req, res) => {
   const headerAuth = req.headers["authorization"];
   const userId = jwtUtils.getUserId(headerAuth);
+
   const post_file = req.file
     ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     : "";
 
-  try {
-    const user = await User.findOne({
-      where: { id: userId },
-    });
+  //try {
+  const user = await User.findOne({
+    where: { id: userId },
+  });
 
-   
+  const post = await Post.create({
+    userId: userId,
+    post_content: req.body.post_content,
+    post_file: post_file,
+  });
 
-    const post = await Post.create({
-      userId: userId,
-      post_content: req.body.post_content,
-      post_file: post_file,
-    });
+  //  if(req.file){
+  //   post_file = `./images/${req.file.filename}`
+  // } else{
+  //   post_file = null
+  // }
 
-    //  if(req.file){
-    //   post_file = `./images/${req.file.filename}`
-    // } else{
-    //   post_file = null
-    // }
-
-    return res.json(post);
-  } catch (error) {
+  return res.json(post);
+  /*} catch (error) {
     res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
-  }
+  }*/
 };
 
 module.exports.updatePost = async (req, res) => {
@@ -58,8 +57,6 @@ module.exports.updatePost = async (req, res) => {
   const userId = jwtUtils.getUserId(headerAuth);
   const { isAdmin } = jwtUtils.getAdmin(headerAuth);
   const id = req.params.id;
-
-  
 
   Post.findByPk(id)
     .then((post) => {
@@ -108,7 +105,7 @@ module.exports.deletePost = async (req, res) => {
             return res.json({ message: "Post supprimé" });
           });
         } else {
-          res.status(404).json({ error: "Vous n'êtes pas autorisé" });
+          res.status(401).json({ error: "Vous n'êtes pas autorisé" });
         }
       } catch (err) {
         return res.status(500).json({ err: "erreur serveur" });

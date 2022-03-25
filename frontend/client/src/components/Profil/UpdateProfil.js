@@ -10,7 +10,7 @@ const UpdateProfil = () => {
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  const [bio, setBio] = useState(userData.data.user.bio);
+  const [bio, setBio] = useState(userData.data?.user.bio);
   
 
   // console.log(userData.data.user.bio);

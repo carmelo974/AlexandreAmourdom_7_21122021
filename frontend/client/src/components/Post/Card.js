@@ -13,14 +13,7 @@ const Card = ({ post }) => {
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
 
-  console.log(userData.data.user.id);
-  console.log(post.userId);
-  
-
   const dispatch = useDispatch();
-  
-
-  
 
   const updateItem = () => {
     if (textUpdate) {
@@ -60,7 +53,7 @@ const Card = ({ post }) => {
               <span>{dateParser(post.createdAt)}</span>
             </div>
             {isUpdated === false && <p>{post.post_content}</p>}
-            {isUpdated &&  (
+            {isUpdated && (
               <div className="update-post">
                 <textarea
                   defaultValue={post.post_content}
@@ -73,17 +66,18 @@ const Card = ({ post }) => {
                 </div>
               </div>
             )}
-            {post.post_file && (
+            {!isEmpty(post) && post.post_file && (
               <img src={post.post_file} alt="card-pic" className="card-pic" />
             )}
-            {  (userData.data.user.id === post.userId)  | (userData.data.user.isAdmin === true) &&(
-              <div className="button-container">
-                <div onClick={() => setIsUpdated(!isUpdated)}>
-                  <img src="./img/icons/edit.svg" alt="edit" />
+            {((userData.data.user.id === post.userId) ||
+              (userData.data.user.isAdmin === true)) && (
+                <div className="button-container">
+                  <div onClick={() => setIsUpdated(!isUpdated)}>
+                    <img src="./img/icons/edit.svg" alt="edit" />
+                  </div>
+                  <DeleteCard id={post.id} />
                 </div>
-                <DeleteCard id={post.id} />
-              </div>
-            )}
+              )}
             <div className="card-footer">
               <div className="comment-icon">
                 <img

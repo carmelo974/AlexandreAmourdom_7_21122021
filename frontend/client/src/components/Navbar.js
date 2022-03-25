@@ -1,12 +1,17 @@
 import React, { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { getUser } from "../actions/user.actions";
 import { UidContext } from "./AppContext";
 import Logout from "./Log/Logout";
 
 const Navbar = () => {
   const uid = useContext(UidContext);
+  // const dispatch = useDispatch()
   const userData = useSelector((state) => state.userReducer);
+
+  // dispatch(getUser())
+ 
 
   return (
     <nav>
@@ -24,7 +29,7 @@ const Navbar = () => {
             <li></li>
             <li className="welcome">
               <NavLink exact to="/profil">
-                <h5>Bienvenue    </h5>
+                <h5>Bienvenue {userData.data?.user.username} </h5>
               </NavLink>
             </li>
             <Logout />

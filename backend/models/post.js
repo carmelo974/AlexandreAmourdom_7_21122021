@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ User, Comment }) {
-      
       this.belongsTo(User, { foreignKey: "userId", as: "user" });
       this.hasMany(Comment);
     }
@@ -22,12 +21,13 @@ module.exports = (sequelize, DataTypes) => {
 
       post_content: {
         type: DataTypes.STRING,
-        validate: {
-          min: 4,
-          notEmpty: true,
-        },
+        
+        // validate: {
+        //   //min: 4,
+        //   notEmpty: false,
+        // },
       },
-      post_file: DataTypes.STRING,
+      post_file: { type: DataTypes.STRING, allowNull: true },
       userName: {
         type: DataTypes.STRING,
         onDelete: "CASCADE",

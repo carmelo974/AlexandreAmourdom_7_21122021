@@ -59,10 +59,10 @@ const ModifDeleteComment = (comment, postId) => {
       )}
       {((isAuthor && modif) || (isAdmin && modif)) && (
         <form action="" onSubmit={handleModif} className="edit-comment-form">
-          <label htmlFor="text" onClick={() => setModif(!modif)}>
+          {/* <label htmlFor="text" onClick={() => setModif(!modif)}>
             Modifier votre commentaire
-          </label>
-          <br />
+          </label> */}
+          {/* <br /> */}
           <input
             type="text"
             name="text"
@@ -70,21 +70,22 @@ const ModifDeleteComment = (comment, postId) => {
             defaultValue={comment.comment.comment}
           />
           <br />
-          <div className="btn">
-            <span
-              onClick={() => {
-                // if (window.confirm("Voulez-vous supprimer ce commentaire ?")) {
-                handleDelete();
-                // }
-              }}
-            >
-              <img src="./img/icons/trash.svg" alt="poubelle" />
-            </span>
-            <input type="submit" value="Envoyer" />
-          </div>
-          {/* <div className="autorisation error">{errorAutorisation}</div> */}
+          <input type="submit" value="Valider vos modifications" />
         </form>
       )}
+      <div className="btn">
+        {(isAuthor || isAdmin) && (
+          <span
+            onClick={() => {
+              if (window.confirm("Voulez-vous supprimer ce commentaire ?")) {
+                handleDelete();
+              }
+            }}
+          >
+            <img src="./img/icons/trash.svg" alt="delete" />
+          </span>
+        )}
+      </div>
     </div>
   );
 };

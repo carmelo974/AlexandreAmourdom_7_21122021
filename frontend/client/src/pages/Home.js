@@ -17,8 +17,9 @@ const Home = () => {
       <div className="main">
         <div className="home-header">
           {uid ? <NewPostForm /> : <Log signin={true} signup={false} />}
+          <Thread />
         </div>
-        <Thread />
+        {/* <Thread /> */}
          {/* <Test />  */}
       </div>
     </div>

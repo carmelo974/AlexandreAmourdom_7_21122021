@@ -23,7 +23,7 @@ const Thread = () => {
     <div className="thread-container">
       <ul>
         {
-          posts.map((post) => {
+          posts?.map((post) => {
             return <Card post={post} key={post.id} />;
           })}
       </ul>

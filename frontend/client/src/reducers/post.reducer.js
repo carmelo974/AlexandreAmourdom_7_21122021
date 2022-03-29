@@ -29,7 +29,7 @@ export default function postReducer(state = initialState, action) {
       return state.filter((post) => post.id !== action.payload.postId);
     case MODIF_COMMENT:
       return state.map((post) => {
-        console.log(post.Comments);
+        
         if (post.id === action.payload.postId) {
           return {
             ...post,

@@ -86,7 +86,7 @@ module.exports.deletePost = async (req, res) => {
   const headerAuth = req.headers["authorization"];
   const userId = jwtUtils.getUserId(headerAuth);
   const { isAdmin } = jwtUtils.getAdmin(headerAuth);
-  console.log(isAdmin);
+  
 
   await User.findOne({
     where: { id: userId },

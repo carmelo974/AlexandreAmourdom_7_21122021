@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       password: DataTypes.STRING,
-      picture: { type: DataTypes.STRING, default: "../images/Patrice.jpg" },
+      picture: { type: DataTypes.STRING, defaultValue: "./images/.jpg" },
       bio: DataTypes.STRING,
       isAdmin: DataTypes.BOOLEAN,
     },

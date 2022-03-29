@@ -5,7 +5,6 @@ import { deleteAccount } from "../../actions/user.actions";
 const DeleteProfil = () => {
   const userData = useSelector((state) => state.userReducer);
   const id = userData.data.user.id;
-  
 
   const dispatch = useDispatch();
 
@@ -14,13 +13,15 @@ const DeleteProfil = () => {
   };
 
   const deleteUser = () => {
+    
+    
     dispatch(deleteAccount(id))
       .then(() => {
         removeLocalStorage("userId");
         removeLocalStorage("token");
       })
       .catch((err) => console.log(err));
-    // window.location = "/";
+    window.location = "/profil";
   };
   return (
     <div
@@ -34,7 +35,7 @@ const DeleteProfil = () => {
         }
       }}
     >
-      <button>Supprimer mon profil</button>
+      <button type="button">Supprimer mon profil</button>
     </div>
   );
 };

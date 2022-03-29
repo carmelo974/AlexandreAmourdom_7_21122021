@@ -17,18 +17,7 @@ const path = require("path");
 
 app.use(helmet());
 
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin",process.env.CLIENT_URL);
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-//   );
-//   next();
-// });
+
 
 let corsOptions = {
   origin: process.env.CLIENT_URL,
@@ -50,22 +39,22 @@ app.use(cookieParser());
 //Cookie-session
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000); //1h
 
-app.use(
-  cookieSession({
-    name: "session",
-    keys: ["key1"],
-    cookie: {
-      secure: true,
-      //garantie que le navigateur envoie le cookie sur HTTPS
-      httpOnly: true,
-      /* Garantit que le cookie n’est envoyé que sur HTTP(S), pas au JavaScript du client, 
-      ce qui renforce la protection contre les attaques de type cross-site scripting. */
-      domain: "http://localhost:3000/",
-      expires: expiryDate,
-      //utilise une date d'expitation pour les cookies persistants
-    },
-  })
-);
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: ["key1"],
+//     cookie: {
+//       secure: true,
+//       //garantie que le navigateur envoie le cookie sur HTTPS
+//       httpOnly: true,
+//       /* Garantit que le cookie n’est envoyé que sur HTTP(S), pas au JavaScript du client, 
+//       ce qui renforce la protection contre les attaques de type cross-site scripting. */
+//       domain: "http://localhost:3000/",
+//       expires: expiryDate,
+//       //utilise une date d'expitation pour les cookies persistants
+//     },
+//   })
+// );
 
 // const expressJson = express.json();
 // const bodyParser = express.urlencoded({ extended: true });
@@ -79,7 +68,7 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.listen(process.env.PORT, async () => {
   console.log(`Listening on port ${process.env.PORT}`);
-  await sequelize.sync({ force: false });
-  // await sequelize.authenticate();
+  //  await sequelize.sync({force: true});
+     await sequelize.authenticate();
   console.log("Database connected");
 });

@@ -2,7 +2,9 @@ import React from "react";
 import axios from "axios";
 
 const Logout = () => {
+  
   const removeLocalStorage = (key) => {
+    
     localStorage.removeItem(key);
   };
 
@@ -10,7 +12,6 @@ const Logout = () => {
     await axios({
       method: "get",
       url: `${process.env.REACT_APP_API_URL}api/user/logout`,
-      
     })
       .then(() => {
         removeLocalStorage("userId");

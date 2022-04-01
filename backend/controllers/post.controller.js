@@ -40,16 +40,7 @@ module.exports.createPost = async (req, res) => {
     post_file: post_file,
   });
 
-  //  if(req.file){
-  //   post_file = `./images/${req.file.filename}`
-  // } else{
-  //   post_file = null
-  // }
-
   return res.json(post);
-  /*} catch (error) {
-    res.status(400).json({ réponse: "L'utilisateur n'existe pas" });
-  }*/
 };
 
 module.exports.updatePost = async (req, res) => {
@@ -86,7 +77,6 @@ module.exports.deletePost = async (req, res) => {
   const headerAuth = req.headers["authorization"];
   const userId = jwtUtils.getUserId(headerAuth);
   const { isAdmin } = jwtUtils.getAdmin(headerAuth);
-  
 
   await User.findOne({
     where: { id: userId },

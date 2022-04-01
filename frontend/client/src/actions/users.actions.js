@@ -4,21 +4,16 @@ export const GET_USERS = "GET_USERS";
 
 export const getUsers = () => {
   return (dispatch) => {
-    
-    return (
-      axios({
-        method: "get",
-        url: `${process.env.REACT_APP_API_URL}api/user/`,
-        headers: {
-          "Authorization": 'Bearer ' + localStorage.getItem("token")
-          
-        },
+    return axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API_URL}api/user/`,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((res) => {
+        dispatch({ type: GET_USERS, payload: res.data });
       })
-        // .get(`${process.env.REACT_APP_API_URL}api/user`)
-        .then((res) => {
-          dispatch({ type: GET_USERS, payload: res.data });
-        })
-        .catch((err) => console.log(err))
-    );
+      .catch((err) => console.log(err));
   };
 };

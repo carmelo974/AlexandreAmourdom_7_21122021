@@ -6,7 +6,6 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 const passwordValidator = require("password-validator");
-const { signUpErrors } = require("../utils/errors.utils");
 
 // schema du mot de passe
 const passwordSchema = new passwordValidator();
@@ -88,31 +87,6 @@ module.exports.signUp = async (req, res) => {
       res.status(500).json({ message, data: error });
     });
 };
-// module.exports.signUp = (req, res) => {
-//   const email = req.body.email;
-//   const username = req.body.username;
-//   const password = req.body.password;
-
-//   User.findOne({ where: { username: req.body.username } }).then((user) => {
-//     bcrypt.hash(req.body.password, 10).then((hash) => {
-//       const user = {
-//         email: email,
-//         username: username,
-//         password: hash,
-//         isAdmin: 0,
-//       };
-//       User.create(username, email, password)
-//         .then((user) => {
-//           const message = `L'utilisateur ${req.body.username} a été crée avec succès`;
-//           res.status(200).json({ message, user: user.id });
-//         })
-//         .catch((err) => {
-//           const errors = signUpErrors(err);
-//           res.status(200).send({ errors });
-//         });
-//     });
-//   });
-// };
 
 //login user
 module.exports.signIn = (req, res) => {
@@ -144,7 +118,7 @@ module.exports.signIn = (req, res) => {
           );
 
           res
-            // .cookie("jwt", token, { httpOnly: true, maxAge })
+
             .status(200)
             .json({ userId: user.id, token, isAdmin: user.isAdmin });
         })
@@ -158,8 +132,6 @@ module.exports.signIn = (req, res) => {
 
 //logout user
 module.exports.logout = (_req, res) => {
-  // const cookie = "";
-  // res.cookie("jwt", " ", { maxAge: 1 });
   res.status(200).json({ message: "déconnecté" });
   res.redirect("/");
 };

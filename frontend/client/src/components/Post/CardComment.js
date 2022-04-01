@@ -35,16 +35,16 @@ const CardComment = ({ post }) => {
         return (
           <div
             className={
-              comment.comment.userId == userData.id
+              comment.comment.userId === userData.id
                 ? "comment-container client"
                 : "comment-container"
             }
             key={idx}
           >
             <div className="left-part">
-              {usersData.data.map((user) => {
-                if (user.id == comment.userId) {
-                  return <img src={user.picture} />;
+              {usersData.data.map((user, idx) => {
+                if (user.id === comment.userId) {
+                  return <img src={user.picture} alt="user_pic" key={idx}/>;
                 }
               })}
             </div>

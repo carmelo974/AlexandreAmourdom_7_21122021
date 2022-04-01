@@ -4,7 +4,7 @@ import App from "./App";
 import "./styles/index.scss";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from "redux-persist/integration/react";
 
 import { applyMiddleware } from "redux";
 import thunk from "redux-thunk";
@@ -33,10 +33,10 @@ const store = createStore(
 );
 
 const persistor = persistStore(store);
-
+/*
 store.dispatch(getUsers());
 store.dispatch(getPosts());
-
+*/
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>

@@ -32,7 +32,7 @@ const UploadImg = () => {
         id="file"
         name="file"
         accept=".jpg, .jpeg, .png"
-        //onChange={(e) => setFile(e.target.files[0])}
+        
         onChange={onFileChange}
       />
       <br />

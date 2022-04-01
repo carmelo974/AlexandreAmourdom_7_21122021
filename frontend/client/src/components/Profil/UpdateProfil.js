@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import LeftNav from "../LeftNav";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
@@ -13,10 +13,10 @@ const UpdateProfil = () => {
   const [bio, setBio] = useState(userData.data?.user.bio);
   
 
-  // console.log(userData.data.user.bio);
+  
 
   const handleUpdate = () => {
-    //  const data = { bio };
+    
 
     dispatch(updateBio(userData.data.user.id, bio))
     setUpdateForm(false);

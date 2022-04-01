@@ -33,28 +33,7 @@ module.exports.getOneUser = (req, res) => {
 
 module.exports.updateOne = async (req, res) => {
   const id = req.params.id;
-  // User.findByPk(id)
-
-  //   .then(() => {
-  //     User.update(req.body).then((user) => {
-  //       //return permet de gérer l'erreur 500 du dernier bloc catch pr éviter de dupliquer 2 blocs catch
-  //       userImage.picture = `./images/${req.file.filename}`;
-  //       if (user === null) {
-  //         const message =
-  //           "L'utilisateur demandé n'existe pas. Réessayez avec un autre identifiant. ";
-
-  //         return res.status(404).json({ message });
-  //       } else {
-  //         const message = `L'utilisateur ${user.username} a bien été modifié.`;
-  //         return res.status(200).json({ message, data: user });
-  //       }
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     const message =
-  //       "L'utilisateur n'a pas pu être modifié. Réessayez dans quelques instants.";
-  //     res.status(500).json({ message, data: error });
-  //   });
+  
 
   User.findByPk(id)
     .then((user) => {

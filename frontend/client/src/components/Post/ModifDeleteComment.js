@@ -13,7 +13,7 @@ const ModifDeleteComment = (comment, postId) => {
   const [modif, setModif] = useState(false);
   const [text, setText] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  // const [controlAdmin, setControlAdmin] = useState("");
+ 
 
   const handleModif = (e) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ const ModifDeleteComment = (comment, postId) => {
         </span>
       )}
       {((isAuthor && modif) || (isAdmin && modif)) && (
-        <form action="" onSubmit={handleModif} className="edit-comment-form">
+        <form action="test.php" onSubmit={handleModif} className="edit-comment-form">
           {/* <label htmlFor="text" onClick={() => setModif(!modif)}>
             Modifier votre commentaire
           </label> */}
@@ -70,7 +70,10 @@ const ModifDeleteComment = (comment, postId) => {
             defaultValue={comment.comment.comment}
           />
           <br />
-          <input type="submit" value="Valider vos modifications" />
+
+          <button type="button" onClick={handleModif}>
+            Valider vos modifications
+          </button>
         </form>
       )}
       <div className="btn">

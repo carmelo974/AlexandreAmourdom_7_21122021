@@ -96,8 +96,7 @@ const SignUpForm = () => {
             id="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            // onClick={(e) => setControlEmail(e.target.value)}
-            // value={email}
+            
           />
           <div className="email error"></div>
           <br />

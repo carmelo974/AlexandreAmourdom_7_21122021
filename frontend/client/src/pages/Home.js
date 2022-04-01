@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { UidContext } from "../components/AppContext";
 import LeftNav from "../components/LeftNav";
 import NewPostForm from "../components/Post/NewPostForm";
-// import Test from "../components/Post/Test";
+
 import Log from "../components/Log";
 
 import Thread from "../components/Thread";
@@ -19,8 +19,7 @@ const Home = () => {
           {uid ? <NewPostForm /> : <Log signin={true} signup={false} />}
           <Thread />
         </div>
-        {/* <Thread /> */}
-         {/* <Test />  */}
+        
       </div>
     </div>
   );

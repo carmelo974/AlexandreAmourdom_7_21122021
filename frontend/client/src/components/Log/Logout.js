@@ -12,6 +12,9 @@ const Logout = () => {
     await axios({
       method: "get",
       url: `${process.env.REACT_APP_API_URL}api/user/logout`,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then(() => {
         removeLocalStorage("userId");

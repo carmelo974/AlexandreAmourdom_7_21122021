@@ -2,14 +2,15 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/auth.controller");
 const userController = require("../controllers/user.controller");
-// const uploadController = require("../controllers/upload.controller")
+
 const auth = require("../middleware/auth.middleware");
-const multerUser = require("../middleware/multer-config.user");
-// const upload = multer()
+const multerUser = require("../middleware/multer-config");
+const rateLimit = require("../middleware/rateLimit")
+
 
 //auth
 router.post("/register", authController.signUp);
-router.post("/login", authController.signIn);
+router.post("/login", rateLimit, authController.signIn);
 router.get("/logout", authController.logout);
 
 //user

@@ -21,7 +21,7 @@ const Card = ({ post }) => {
         dispatch(getPosts())
       );
     } else {
-      alert("entrer msg");
+      alert("Veuillez entrer un message");
     }
     setIsUpdated(false);
   };
@@ -37,9 +37,9 @@ const Card = ({ post }) => {
       ) : (
         <>
           <div className="card-left">
-            {usersData.data.map((user) => {
-              if (user.id == post.userId) return <img src={user.picture} />;
-            })}
+            {usersData.data.map((user, idx) => {
+              if (user.id === post.userId) return  <img src={user.picture} alt="user_pic" key={idx}/>;
+            } )}
           </div>
           <div className="card-right">
             <div className="card-header">
@@ -69,15 +69,15 @@ const Card = ({ post }) => {
             {!isEmpty(post) && post.post_file && (
               <img src={post.post_file} alt="card-pic" className="card-pic" />
             )}
-            {((userData.data.user.id === post.userId) ||
-              (userData.data.user.isAdmin === true)) && (
-                <div className="button-container">
-                  <div onClick={() => setIsUpdated(!isUpdated)}>
-                    <img src="./img/icons/edit.svg" alt="edit" />
-                  </div>
-                  <DeleteCard id={post.id} />
+            {(userData.data.user.id === post.userId ||
+              userData.data.user.isAdmin === true) && (
+              <div className="button-container">
+                <div onClick={() => setIsUpdated(!isUpdated)}>
+                  <img src="./img/icons/edit.svg" alt="edit" />
                 </div>
-              )}
+                <DeleteCard id={post.id} />
+              </div>
+            )}
             <div className="card-footer">
               <div className="comment-icon">
                 <img

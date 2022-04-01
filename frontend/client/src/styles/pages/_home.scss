@@ -2,7 +2,7 @@
   
   display: grid;
   max-width: 1400px;
-  grid-template-columns: 60px 1fr 40px;
+  grid-template-columns: 200px 1fr 200px;
   overflow: hidden;
   margin: 58px auto 50px;
   position: relative;
@@ -73,18 +73,5 @@
       }
     }
   }
-  // .right-side {
-  //   position: relative;
-  //   width: 100%;
-  //   margin: 0px 0 0 14px;
-
-  //   @media screen and(max-width: 990px) {
-  //     display: none;
-  //   }
   
-  //   .right-side-container {
-  //     position: fixed;
-    
-  //   }
-  // }
 }

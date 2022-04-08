@@ -5,19 +5,20 @@ import { addComment, getPosts } from "../../actions/post.actions";
 import { dateParser } from "../Utils";
 import ModifDeleteComment from "./ModifDeleteComment";
 
-const CardComment = ({ post }) => {
+const CardComment = (props) => {
   const [comment, setComment] = useState("");
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
-  
 
   const handleComment = (e) => {
     e.preventDefault();
 
     if (comment) {
-      dispatch(addComment(post.id, userData.id, comment, userData.userName))
+      dispatch(
+        addComment(props.post.id, userData.id, comment, userData.userName)
+      )
         .then(() => dispatch(getPosts()))
         .then(() => setComment(""));
     } else {
@@ -31,7 +32,7 @@ const CardComment = ({ post }) => {
 
   return (
     <div className="comments-container">
-      {post.Comments.map((comment, idx) => {
+      {props.post.Comments.map((comment, idx) => {
         return (
           <div
             className={
@@ -44,7 +45,7 @@ const CardComment = ({ post }) => {
             <div className="left-part">
               {usersData.data.map((user, idx) => {
                 if (user.id === comment.userId) {
-                  return <img src={user.picture} alt="user_pic" key={idx}/>;
+                  return <img src={user.picture} alt="user_pic" key={idx} />;
                 }
               })}
             </div>
@@ -56,7 +57,11 @@ const CardComment = ({ post }) => {
                 <span>{dateParser(comment.createdAt)}</span>
               </div>
               <p>{comment.comment}</p>
-              <ModifDeleteComment comment={comment} postId={post.id} />
+              <ModifDeleteComment
+                comment={comment}
+                postId={props.post.id}
+                stateComments={props.stateComments}
+              />
             </div>
           </div>
         );

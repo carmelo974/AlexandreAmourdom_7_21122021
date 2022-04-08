@@ -33,10 +33,10 @@ const store = createStore(
 );
 
 const persistor = persistStore(store);
-/*
-store.dispatch(getUsers());
-store.dispatch(getPosts());
-*/
+
+// store.dispatch(getUsers());
+// store.dispatch(getPosts());
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>

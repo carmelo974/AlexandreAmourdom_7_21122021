@@ -5,7 +5,7 @@ import { dateParser, isEmpty } from "../Utils";
 import CardComment from "./CardComment";
 import DeleteCard from "./DeleteCard";
 
-const Card = ({ post }) => {
+const Card = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false); // modif post
   const [textUpdate, setTextUpdate] = useState(null);
@@ -15,9 +15,16 @@ const Card = ({ post }) => {
 
   const dispatch = useDispatch();
 
+  const setStateComments = (state) => {
+    console.log(showComments);
+    setShowComments(state);
+    console.log(showComments);
+    console.log("ok");
+  };
+
   const updateItem = () => {
     if (textUpdate) {
-      dispatch(updatePost(post.id, textUpdate)).then(() =>
+      dispatch(updatePost(props.post.id, textUpdate)).then(() =>
         dispatch(getPosts())
       );
     } else {
@@ -28,35 +35,38 @@ const Card = ({ post }) => {
 
   useEffect(() => {
     !isEmpty(usersData[0]) && setIsLoading(true);
+    console.log("useEff");
+    console.log(showComments);
   }, [usersData]);
 
   return (
-    <li className="card-container" key={post.id}>
+    <li className="card-container" key={props.post.id}>
       {isLoading ? (
         <i className="fas fa-spinner fa-spin"></i>
       ) : (
         <>
           <div className="card-left">
             {usersData.data.map((user, idx) => {
-              if (user.id === post.userId) return  <img src={user.picture} alt="user_pic" key={idx}/>;
-            } )}
+              if (user.id === props.post.userId)
+                return <img src={user.picture} alt="user_pic" key={idx} />;
+            })}
           </div>
           <div className="card-right">
             <div className="card-header">
               <div className="pseudo">
                 <h3>
                   {usersData.data.map((user) => {
-                    if (user.id === post.userId) return user.username;
+                    if (user.id === props.post.userId) return user.username;
                   })}
                 </h3>
               </div>
-              <span>{dateParser(post.createdAt)}</span>
+              <span>{dateParser(props.post.createdAt)}</span>
             </div>
-            {isUpdated === false && <p>{post.post_content}</p>}
+            {isUpdated === false && <p>{props.post.post_content}</p>}
             {isUpdated && (
               <div className="update-post">
                 <textarea
-                  defaultValue={post.post_content}
+                  defaultValue={props.post.post_content}
                   onChange={(e) => setTextUpdate(e.target.value)}
                 />
                 <div className="button-container">
@@ -66,16 +76,20 @@ const Card = ({ post }) => {
                 </div>
               </div>
             )}
-            {!isEmpty(post) && post.post_file && (
-              <img src={post.post_file} alt="card-pic" className="card-pic" />
+            {!isEmpty(props.post) && props.post.post_file && (
+              <img
+                src={props.post.post_file}
+                alt="card-pic"
+                className="card-pic"
+              />
             )}
-            {(userData.data.user.id === post.userId ||
+            {(userData.data.user.id === props.post.userId ||
               userData.data.user.isAdmin === true) && (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="edit" />
                 </div>
-                <DeleteCard id={post.id} />
+                <DeleteCard id={props.post.id} />
               </div>
             )}
             <div className="card-footer">
@@ -85,11 +99,13 @@ const Card = ({ post }) => {
                   src="./img/commentaire.png"
                   alt="commentaire-pic"
                 />
-                {<span>{post.Comments.length}</span>}
+                <span>{props.post.Comments.length}</span>
               </div>
               <img src="./img/partager.png" alt="share-pic" />
             </div>
-            {showComments && <CardComment post={post} />}
+            {showComments && (
+              <CardComment post={props.post} stateComments={setStateComments} />
+            )}
           </div>
         </>
       )}

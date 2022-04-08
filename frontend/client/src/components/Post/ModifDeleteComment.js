@@ -6,31 +6,30 @@ import {
   modifComment,
 } from "../../actions/post.actions";
 
-const ModifDeleteComment = (comment, postId) => {
+const ModifDeleteComment = (props) => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const [isAuthor, setIsAuthor] = useState(false);
   const [modif, setModif] = useState(false);
   const [text, setText] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
- 
+  console.log(props);
 
   const handleModif = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     if (text) {
-      dispatch(modifComment(postId, comment.comment.id, text)).then(() =>
+      dispatch(modifComment(props.postId, props.comment.id, text)).then(() =>
         dispatch(getPosts())
       );
       setText("");
-      setModif(false);
+      setModif(true);
+      props.stateComments(true);
     }
   };
 
   const handleDelete = () => {
-    dispatch(deleteComment(comment.comment.id)).then(() =>
-      dispatch(getPosts())
-    );
+    dispatch(deleteComment(props.comment.id)).then(() => dispatch(getPosts()));
   };
 
   useEffect(() => {
@@ -42,13 +41,13 @@ const ModifDeleteComment = (comment, postId) => {
     checkAdmin();
 
     const checkAuthor = () => {
-      if (userData.data.user.id === comment.comment.userId) {
+      if (userData.data.user.id === props.comment.userId) {
         setIsAuthor(true);
       }
     };
 
     checkAuthor();
-  }, [comment.comment.userId]);
+  }, [props.comment.userId]);
 
   return (
     <div className="edit-comment">
@@ -58,7 +57,11 @@ const ModifDeleteComment = (comment, postId) => {
         </span>
       )}
       {((isAuthor && modif) || (isAdmin && modif)) && (
-        <form action="test.php" onSubmit={handleModif} className="edit-comment-form">
+        <form
+          // action="test.php"
+          //  onSubmit={handleModif}
+          className="edit-comment-form"
+        >
           {/* <label htmlFor="text" onClick={() => setModif(!modif)}>
             Modifier votre commentaire
           </label> */}
@@ -67,7 +70,7 @@ const ModifDeleteComment = (comment, postId) => {
             type="text"
             name="text"
             onChange={(e) => setText(e.target.value)}
-            defaultValue={comment.comment.comment}
+            defaultValue={props.comment.comment}
           />
           <br />
 

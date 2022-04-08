@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../actions/post.actions";
 import { getUsers } from "../actions/users.actions";
 import Card from "./Post/Card";
-import { isEmpty } from "./Utils";
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
@@ -22,10 +21,9 @@ const Thread = () => {
   return (
     <div className="thread-container">
       <ul>
-        {
-          posts?.map((post) => {
-            return <Card post={post} key={post.id} />;
-          })}
+        {posts?.map((post) => {
+          return <Card post={post} key={post.id} />;
+        })}
       </ul>
     </div>
   );

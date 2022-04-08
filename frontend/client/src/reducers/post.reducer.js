@@ -27,24 +27,24 @@ export default function postReducer(state = initialState, action) {
       };
 
     case MODIF_COMMENT:
-      console.log(state);
-      // return state.map((post) => {
-      //   if (post.id === action.payload.postId) {
-      //     return {
-      //       ...post,
-      //       comments: post.Comments.map((comment) => {
-      //         if (comment.id === action.payload.commentId) {
-      //           return {
-      //             ...comment,
-      //             comment: action.payload.comment,
-      //           };
-      //         } else {
-      //           return comment;
-      //         }
-      //       }),
-      //     };
-      //   } else return post;
-      // });
+      return state.posts.map((post) => {
+        if (post.id === action.payload.postId) {
+          return {
+            ...post,
+            Comments: post.Comments.map((comment) => {
+              if (comment.id === action.payload.commentId) {
+                return {
+                  ...comment,
+                  comment: action.payload.comment,
+                };
+              } else {
+                return comment;
+              }
+            }),
+          };
+        } else return post;
+      });
+
     case DELETE_COMMENT:
       return state.posts.map((post) => {
         if (post.id === action.payload.postId) {

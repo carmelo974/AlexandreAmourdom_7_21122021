@@ -104,7 +104,7 @@ const Card = (props) => {
               <img src="./img/partager.png" alt="share-pic" />
             </div>
             {showComments && (
-              <CardComment post={props.post} stateComments={setStateComments} />
+              <CardComment post={props.post} setShowComments={setShowComments} />
             )}
           </div>
         </>

@@ -7,6 +7,7 @@ import {
 } from "../../actions/post.actions";
 
 const ModifDeleteComment = (props) => {
+  console.log(props);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const [isAuthor, setIsAuthor] = useState(false);
@@ -16,7 +17,7 @@ const ModifDeleteComment = (props) => {
   console.log(props);
 
   const handleModif = (e) => {
-    //e.preventDefault();
+    e.preventDefault();
 
     if (text) {
       dispatch(modifComment(props.postId, props.comment.id, text)).then(() =>
@@ -24,7 +25,8 @@ const ModifDeleteComment = (props) => {
       );
       setText("");
       setModif(true);
-      props.stateComments(true);
+      console.log("okay");
+      props.setShowComments(true);
     }
   };
 

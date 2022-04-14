@@ -22,15 +22,10 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      userName: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        onDelete: "CASCADE",
-      },
+
       post_content: {
         type: DataTypes.STRING,
         allowNull: false,
-        
       },
       post_file: {
         type: DataTypes.STRING,

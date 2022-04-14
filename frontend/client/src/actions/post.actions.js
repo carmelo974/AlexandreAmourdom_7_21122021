@@ -58,7 +58,7 @@ export const updatePost = (postId, post_content) => {
       },
     })
       .then((res) => {
-        console.log(res.data);
+       
         dispatch({ type: UPDATE_POST, payload: { post_content, postId } });
       })
       .catch((err) => console.log(err));
@@ -75,7 +75,7 @@ export const deletePost = (postId) => {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        
         dispatch({ type: DELETE_POST, payload: { postId } });
       })
       .catch((err) => console.log(err));

@@ -21,17 +21,8 @@ module.exports = (sequelize, DataTypes) => {
 
       post_content: {
         type: DataTypes.STRING,
-        
-        // validate: {
-        //   //min: 4,
-        //   notEmpty: false,
-        // },
       },
       post_file: { type: DataTypes.STRING, allowNull: true },
-      userName: {
-        type: DataTypes.STRING,
-        onDelete: "CASCADE",
-      },
     },
 
     {

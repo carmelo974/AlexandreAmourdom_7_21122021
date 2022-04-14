@@ -24,7 +24,7 @@ const ModifDeleteComment = (props) => {
         dispatch(getPosts())
       );
       setText("");
-      setModif(true);
+      setModif(false);
       console.log("okay");
       props.setShowComments(true);
     }

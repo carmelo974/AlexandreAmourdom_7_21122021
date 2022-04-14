@@ -14,9 +14,27 @@ Création d'un réseau social d'entreprise
   
   </p>
 
-### Installation:
-- Installer le back: npm i
-- Installer Sequelize/cli: npm i sequelize-cli -g
-- Retirer l'extension .example du fichier .env.example :
+### Installation :
+- Installez le back : npm i
+- Installez Sequelize/cli : npm i sequelize-cli -g
+- Retirez l'extension .example du fichier .env.example :
     -  Remplacer les valeurs TOKEN, USER et PASSWORD 
-     -   
+   
+- Allez dans le terminal du dossier backend :
+  - **sequelize db:create**
+  - **sequelize db:migrate**
+- Pour terminer, ouvrer un nouveau terminal dans le dossier backend :
+  - **npm start**  
+     
+# FRONTEND
+
+<p align="center">
+  <img  width="20%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSsy5jSnZbLzPx7WinhxgKZkWz91u0PEg-dQ&usqp=CAU" />
+  
+  </p>
+  
+  ### Lancez le frontend :
+  
+  - Ouvrez un terminal dans le dossier client (frontend\client) :
+      -   **npmstart**
+      

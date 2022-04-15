@@ -85,8 +85,7 @@ module.exports.deletePost = async (req, res) => {
     .then(async () => {
       try {
         const post = await Post.findOne({ where: { id: req.params.id } });
-        console.log(post.userId);
-        console.log(userId);
+        
 
         if (userId == post.userId || isAdmin === true) {
           const filename = post.post_file.split("/images/")[1];

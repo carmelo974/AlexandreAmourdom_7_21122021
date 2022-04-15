@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 
-
 const userRoutes = require("./routes/user.routes");
 const postRoutes = require("./routes/post.routes");
 const commentRoutes = require("./routes/comment.routes");
@@ -22,8 +21,6 @@ let corsOptions = {
   allowedHeaders: ["Authorization", "Content-Type"],
 };
 
-
-
 app.use(cors(corsOptions));
 
 app.use(express.json());
@@ -33,19 +30,15 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-app.use("/api/user",  userRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-
-
-
-
 app.listen(process.env.PORT, async () => {
   console.log(`Listening on port ${process.env.PORT}`);
-  //  await sequelize.sync({force: true});
+
   await sequelize.authenticate();
   console.log("Database connected");
 });

@@ -14,6 +14,7 @@ const ModifDeleteComment = (props) => {
   const [modif, setModif] = useState(false);
   const [text, setText] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const userId = localStorage.getItem("userId");
   console.log(props);
 
   const handleModif = (e) => {
@@ -27,11 +28,16 @@ const ModifDeleteComment = (props) => {
       setModif(false);
       console.log("okay");
       props.setShowComments(true);
+    } else if (!userId) {
+      alert("Veuillez-vous connecter ou vous inscrire");
     }
   };
 
   const handleDelete = () => {
     dispatch(deleteComment(props.comment.id)).then(() => dispatch(getPosts()));
+    if (!userId) {
+      alert("Veuillez-vous connecter ou vous inscrire");
+    }
   };
 
   useEffect(() => {

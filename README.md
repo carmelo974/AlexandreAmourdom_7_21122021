@@ -17,7 +17,7 @@ Création d'un réseau social d'entreprise
 ### Installation :
 - Installez le back : npm i
 - Installez Sequelize/cli : npm i sequelize-cli -g
-- Retirez l'extension .example du fichier .env.example :
+- Retirez l'extension .example du fichier .env.example dans le dossier config :
     -  Remplacer les valeurs TOKEN, USER et PASSWORD 
    
 - Allez dans le terminal du dossier backend :
@@ -36,5 +36,5 @@ Création d'un réseau social d'entreprise
   ### Lancez le frontend :
   
   - Ouvrez un terminal dans le dossier client (frontend\client) :
-      -   **npmstart**
+      -   **npm start**
       

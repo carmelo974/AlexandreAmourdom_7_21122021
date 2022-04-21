@@ -28,7 +28,7 @@ const DeleteProfil = () => {
       onClick={() => {
         if (
           window.confirm(
-            "Voulez-vous supprimer votre profil ? Cette action sera irréversible"
+            "Voulez-vous supprimer votre profil ? Cette action est irréversible"
           )
         ) {
           deleteUser();

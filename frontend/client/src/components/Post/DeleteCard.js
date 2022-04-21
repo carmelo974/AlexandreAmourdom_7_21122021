@@ -5,8 +5,15 @@ import { deletePost, getPosts } from "../../actions/post.actions";
 
 const DeleteCard = (props) => {
   const dispatch = useDispatch();
-  const deleteQuote = () =>
+  const userId = localStorage.getItem("userId");
+  const deleteQuote = () => {
+    if (!userId) {
+      alert("Veuillez-vous connecter ou vous inscrire");
+    }
     dispatch(deletePost(props.id)).then(() => dispatch(getPosts()));
+  }
+    
+    
 
   return (
     <div

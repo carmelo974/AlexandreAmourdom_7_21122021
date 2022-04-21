@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import LeftNav from "../LeftNav";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
@@ -11,14 +11,9 @@ const UpdateProfil = () => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const [bio, setBio] = useState(userData.data?.user.bio);
-  
-
-  
 
   const handleUpdate = () => {
-    
-
-    dispatch(updateBio(userData.data.user.id, bio))
+    dispatch(updateBio(userData.data.user.id, bio));
     setUpdateForm(false);
   };
 
@@ -47,7 +42,6 @@ const UpdateProfil = () => {
               <>
                 <textarea
                   type="text"
-                  // placeholder={userData.bio}
                   defaultValue={bio}
                   onChange={(e) => setBio(e.target.value)}
                 ></textarea>

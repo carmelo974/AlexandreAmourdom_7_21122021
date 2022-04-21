@@ -57,6 +57,9 @@ nav {
       
       .welcome {
         transform: translateY(2px);
+        background: #ffd7d7;
+        border-radius: 20px;
+        padding: 8px;
 
         @media screen and(max-width: 590px) {
           display: none;

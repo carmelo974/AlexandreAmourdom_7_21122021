@@ -1,5 +1,6 @@
 const { sequelize, User } = require("../models");
 
+
 module.exports.getAllUsers = (req, res) => {
   User.findAll()
     .then((user) => {
@@ -33,7 +34,6 @@ module.exports.getOneUser = (req, res) => {
 
 module.exports.updateOne = async (req, res) => {
   const id = req.params.id;
-  
 
   User.findByPk(id)
     .then((user) => {
@@ -79,8 +79,6 @@ module.exports.deleteUser = (req, res) => {
 };
 
 module.exports.uploadPicture = (req, res) => {
-  // return res.status(200).json("test");
-
   const id = req.params.id;
 
   const userImage = {

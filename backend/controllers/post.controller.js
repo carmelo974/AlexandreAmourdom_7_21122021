@@ -29,7 +29,7 @@ module.exports.createPost = async (req, res) => {
     ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     : "";
 
-  //try {
+  
   const user = await User.findOne({
     where: { id: userId },
   });

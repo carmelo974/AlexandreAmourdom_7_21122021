@@ -10,8 +10,8 @@ const NewPostForm = () => {
   const [postPicture, setPostPicture] = useState(null);
   const [image, setImage] = useState();
   const userData = useSelector((state) => state.userReducer);
+
   const dispatch = useDispatch();
-  
 
   const handlePost = async () => {
     if (post_content || postPicture) {
@@ -54,7 +54,7 @@ const NewPostForm = () => {
               <img src={userData.data.user.picture} alt="user-img" />
             </div>
           </NavLink>
-          <div className="post-form">
+          <div  className="post-form">
             <textarea
               name="post_content"
               id="post_content"
@@ -82,7 +82,7 @@ const NewPostForm = () => {
               </li>
             ) : null}
             <div className="footer-form">
-              <div className="icon">
+              <div  className="icon">
                 <img src="./img/icons/icons8-image-40.png" alt="img-post" />
 
                 <input
@@ -93,7 +93,7 @@ const NewPostForm = () => {
                   onChange={(e) => handlePicture(e)}
                 />
               </div>
-              <div className="btn-send">
+              <div  className="btn-send">
                 {post_content || postPicture ? (
                   <button className="cancel" onClick={cancelPost}>
                     Annuler

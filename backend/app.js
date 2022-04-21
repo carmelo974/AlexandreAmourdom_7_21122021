@@ -1,15 +1,19 @@
+//Imports
 const express = require("express");
 const cors = require("cors");
 
+//sécurité
+const helmet = require("helmet"); // sécurise les informations présentes dans le Header
+const xssClean = require("xss-clean");
+
+//Variables routes
 const userRoutes = require("./routes/user.routes");
 const postRoutes = require("./routes/post.routes");
 const commentRoutes = require("./routes/comment.routes");
 const { sequelize } = require("./models");
 require("dotenv").config({ path: "./config/.env" });
 
-//sécurité
-const helmet = require("helmet"); // sécurise les informations présentes dans le Header
-
+//Server
 const app = express();
 const path = require("path");
 
@@ -26,10 +30,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const router = express.Router();
-router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
+// const router = express.Router();
+// router.use(express.json());
+// router.use(express.urlencoded({ extended: true }));
 
+app.use(xssClean());
+
+//Routes
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);

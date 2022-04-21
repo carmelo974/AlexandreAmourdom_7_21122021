@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Post }) {
       // define association here
-      
+
       this.hasMany(Post, { foreignKey: "userId", as: "posts" });
     }
   }
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       password: DataTypes.STRING,
-      picture: { type: DataTypes.STRING, defaultValue: "./images/.jpg" },
+      picture: { type: DataTypes.STRING },
       bio: DataTypes.STRING,
       isAdmin: DataTypes.BOOLEAN,
     },

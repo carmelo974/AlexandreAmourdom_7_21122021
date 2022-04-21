@@ -6,9 +6,7 @@ module.exports.createComment = async (req, res) => {
   const userId = jwtUtils.getUserId(headerAuth);
 
   const postId = req.params.id;
-  console.log("postId " + postId);
 
-  
   const comment = req.body.comment;
 
   await User.findOne({
@@ -37,7 +35,6 @@ module.exports.updateComment = (req, res) => {
   const userId = jwtUtils.getUserId(headerAuth);
   const { isAdmin } = jwtUtils.getAdmin(headerAuth);
   const id = req.params.id;
-  console.log(isAdmin);
 
   Comment.findByPk(id)
     .then((comment) => {
@@ -64,7 +61,6 @@ module.exports.updateComment = (req, res) => {
 
 module.exports.getById = (req, res) => {
   const id = req.params.id;
-  console.log(id);
 
   Comment.findByPk(id, {
     include: ["user"],
@@ -86,7 +82,6 @@ module.exports.findAllComment = (req, res) => {
       }
     })
     .catch(function (err) {
-      console.log(err);
       res.status(500).json({ error: err });
     });
 };

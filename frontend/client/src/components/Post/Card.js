@@ -12,15 +12,13 @@ const Card = (props) => {
   const [showComments, setShowComments] = useState(false);
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
+  const userId = localStorage.getItem("userId");
 
   const dispatch = useDispatch();
 
-  const setStateComments = (state) => {
-    console.log(showComments);
-    setShowComments(state);
-    console.log(showComments);
-    console.log("ok");
-  };
+  // const setStateComments = (state) => {
+  //   setShowComments(state);
+  // };
 
   const updateItem = () => {
     if (textUpdate) {
@@ -30,13 +28,14 @@ const Card = (props) => {
     } else {
       alert("Veuillez entrer un message");
     }
+    if (!userId) {
+      alert("Veuillez-vous connecter ou vous inscrire");
+    }
     setIsUpdated(false);
   };
 
   useEffect(() => {
     !isEmpty(usersData[0]) && setIsLoading(true);
-    console.log("useEff");
-    console.log(showComments);
   }, [usersData]);
 
   return (
@@ -104,7 +103,10 @@ const Card = (props) => {
               <img src="./img/partager.png" alt="share-pic" />
             </div>
             {showComments && (
-              <CardComment post={props.post} setShowComments={setShowComments} />
+              <CardComment
+                post={props.post}
+                // setShowComments={setShowComments}
+              />
             )}
           </div>
         </>

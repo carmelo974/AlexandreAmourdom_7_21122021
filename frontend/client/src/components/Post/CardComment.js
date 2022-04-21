@@ -6,7 +6,6 @@ import { dateParser } from "../Utils";
 import ModifDeleteComment from "./ModifDeleteComment";
 
 const CardComment = (props) => {
-  console.log(props);
   const [comment, setComment] = useState("");
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
@@ -58,10 +57,11 @@ const CardComment = (props) => {
                 <span>{dateParser(comment.createdAt)}</span>
               </div>
               <p>{comment.comment}</p>
+
               <ModifDeleteComment
                 comment={comment}
                 postId={props.post.id}
-                setShowComments={props.setShowComments}
+                // setShowComments={props.setShowComments}
               />
             </div>
           </div>

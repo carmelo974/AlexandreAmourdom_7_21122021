@@ -7,7 +7,6 @@ import {
 } from "../../actions/post.actions";
 
 const ModifDeleteComment = (props) => {
-  console.log(props);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const [isAuthor, setIsAuthor] = useState(false);
@@ -15,7 +14,6 @@ const ModifDeleteComment = (props) => {
   const [text, setText] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const userId = localStorage.getItem("userId");
-  console.log(props);
 
   const handleModif = (e) => {
     e.preventDefault();
@@ -26,8 +24,8 @@ const ModifDeleteComment = (props) => {
       );
       setText("");
       setModif(false);
-      console.log("okay");
-      props.setShowComments(true);
+
+      // props.setShowComments(true);
     } else if (!userId) {
       alert("Veuillez-vous connecter ou vous inscrire");
     }
@@ -65,15 +63,7 @@ const ModifDeleteComment = (props) => {
         </span>
       )}
       {((isAuthor && modif) || (isAdmin && modif)) && (
-        <form
-          // action="test.php"
-          //  onSubmit={handleModif}
-          className="edit-comment-form"
-        >
-          {/* <label htmlFor="text" onClick={() => setModif(!modif)}>
-            Modifier votre commentaire
-          </label> */}
-          {/* <br /> */}
+        <form className="edit-comment-form">
           <input
             type="text"
             name="text"

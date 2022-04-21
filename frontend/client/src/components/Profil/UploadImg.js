@@ -19,8 +19,6 @@ const UploadImg = () => {
     data.append("userId", userData.data.user.id);
     data.append("image", file);
 
-    console.log(data);
-    console.log(userData.data.user.id);
     dispatch(uploadPicture(data, userData.data.user.id));
   };
 
@@ -32,7 +30,6 @@ const UploadImg = () => {
         id="file"
         name="file"
         accept=".jpg, .jpeg, .png"
-        
         onChange={onFileChange}
       />
       <br />

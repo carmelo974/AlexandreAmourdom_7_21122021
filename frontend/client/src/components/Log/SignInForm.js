@@ -49,6 +49,7 @@ const SignInForm = () => {
         type="text"
         name="username"
         id="username"
+        aria-required="true"
         onChange={(e) => setUsername(e.target.value)}
         value={username}
       />
@@ -60,6 +61,7 @@ const SignInForm = () => {
         type="password"
         name="password"
         id="password"
+        aria-required="true"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />

@@ -61,7 +61,7 @@ const SignUpForm = () => {
           }
         })
         .catch((err) => console.log(err));
-        setErrorData("Veuillez remplir les champs");
+      setErrorData("Veuillez remplir les champs");
     }
   };
 
@@ -83,8 +83,10 @@ const SignUpForm = () => {
             type="text"
             name="username"
             id="username"
+            aria-required="true"
             onChange={(e) => setUsername(e.target.value)}
             value={username}
+            autoFocus={true}
           />
           <div className="username error"></div>
           <br />
@@ -94,9 +96,9 @@ const SignUpForm = () => {
             type="text"
             name="email"
             id="email"
+            aria-required="true"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            
           />
           <div className="email error"></div>
           <br />
@@ -106,6 +108,7 @@ const SignUpForm = () => {
             type="text"
             name="password"
             id="password"
+            aria-required="true"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
@@ -117,6 +120,7 @@ const SignUpForm = () => {
             type="password"
             name="password"
             id="password-conf"
+            aria-required="true"
             onChange={(e) => setControlPassword(e.target.value)}
             value={controlPassword}
           />

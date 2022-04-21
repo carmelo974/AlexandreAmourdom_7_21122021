@@ -49,7 +49,7 @@ export const uploadPicture = (data, id) => {
 };
 
 export const updateBio = (id, bio) => {
-  // ne fonctionne pa  en dynamique
+  
   return (dispatch) => {
     return axios({
       method: "put",

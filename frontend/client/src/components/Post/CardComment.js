@@ -12,6 +12,7 @@ const CardComment = (props) => {
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
 
+  /* fonction permettant d'ajouter un commentaire */
   const handleComment = (e) => {
     e.preventDefault();
 
@@ -45,7 +46,15 @@ const CardComment = (props) => {
             <div className="left-part">
               {usersData.data.map((user, idx) => {
                 if (user.id === comment.userId) {
-                  return <img src={user.picture} alt="user_pic" key={idx} />;
+                  return (
+                    <img
+                      src={user.picture || "./img/user.png"}
+                      alt="user_pic"
+                      key={idx}
+                    />
+                  );
+                } else {
+                  return null;
                 }
               })}
             </div>
@@ -58,11 +67,7 @@ const CardComment = (props) => {
               </div>
               <p>{comment.comment}</p>
 
-              <ModifDeleteComment
-                comment={comment}
-                postId={props.post.id}
-                // setShowComments={props.setShowComments}
-              />
+              <ModifDeleteComment comment={comment} postId={props.post.id} />
             </div>
           </div>
         );

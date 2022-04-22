@@ -30,9 +30,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// const router = express.Router();
-// router.use(express.json());
-// router.use(express.urlencoded({ extended: true }));
+
 
 app.use(xssClean());
 

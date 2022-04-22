@@ -13,6 +13,7 @@ const SignUpForm = () => {
   const [controlPass, setControlPass] = useState("");
   const [errorData, setErrorData] = useState("");
 
+  /* fonction permettant de s'enregistrer et de vérifier les données */
   const handleRegister = async (e) => {
     e.preventDefault();
     const usernameError = document.querySelector(".username.error");
@@ -103,15 +104,21 @@ const SignUpForm = () => {
           <div className="email error"></div>
           <br />
           <label htmlFor="password">Mot de passe</label>
+
           <br />
           <input
-            type="text"
+            type="password"
             name="password"
             id="password"
             aria-required="true"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
+          <br />
+          <i>
+            Votre mdp doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre
+            et 10 caractères
+          </i>
           <div className="password error"></div>
           <br />
           <label htmlFor="password-conf">Confirmer mot de passe</label>

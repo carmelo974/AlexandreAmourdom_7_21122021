@@ -11,6 +11,7 @@ const UploadImg = () => {
     setFile(event.target.files[0]);
   };
 
+  /*fonction permettant de modier la photode profil */
   const handlePicture = (e) => {
     e.preventDefault();
 

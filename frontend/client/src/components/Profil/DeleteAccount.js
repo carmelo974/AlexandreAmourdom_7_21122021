@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { deleteAccount } from "../../actions/user.actions";
 
 const DeleteProfil = () => {
@@ -12,16 +13,15 @@ const DeleteProfil = () => {
     localStorage.removeItem(key);
   };
 
+  /*fonction permettant de supprimer un utilisteur et renvoie vers la page profil  */
   const deleteUser = () => {
-    
-    
     dispatch(deleteAccount(id))
       .then(() => {
         removeLocalStorage("userId");
         removeLocalStorage("token");
+        window.location = "/profil";
       })
       .catch((err) => console.log(err));
-    window.location = "/profil";
   };
   return (
     <div

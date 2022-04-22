@@ -6,6 +6,8 @@ import { deletePost, getPosts } from "../../actions/post.actions";
 const DeleteCard = (props) => {
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
+
+  /* fonction permettant de supprimer un post */
   const deleteQuote = () => {
     if (!userId) {
       alert("Veuillez-vous connecter ou vous inscrire");

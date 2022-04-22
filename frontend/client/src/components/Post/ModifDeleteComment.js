@@ -15,6 +15,7 @@ const ModifDeleteComment = (props) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const userId = localStorage.getItem("userId");
 
+  /*fonction permettant de modifier un commentaire et de modifer le store */
   const handleModif = (e) => {
     e.preventDefault();
 
@@ -24,13 +25,12 @@ const ModifDeleteComment = (props) => {
       );
       setText("");
       setModif(false);
-
-      // props.setShowComments(true);
     } else if (!userId) {
       alert("Veuillez-vous connecter ou vous inscrire");
     }
   };
 
+  /*fonction permettant de supprimer un commentaire et le store */
   const handleDelete = () => {
     dispatch(deleteComment(props.comment.id)).then(() => dispatch(getPosts()));
     if (!userId) {
@@ -38,6 +38,7 @@ const ModifDeleteComment = (props) => {
     }
   };
 
+  /*useEffect qui vérifie si l'utilisateur est un admin et/ou celui-ci est le propriétaire du commentaire */
   useEffect(() => {
     const checkAdmin = () => {
       if (userData.data.user.isAdmin === true) {

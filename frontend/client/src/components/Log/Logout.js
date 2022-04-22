@@ -2,12 +2,11 @@ import React from "react";
 import axios from "axios";
 
 const Logout = () => {
-  
   const removeLocalStorage = (key) => {
-    
     localStorage.removeItem(key);
   };
 
+  /* fonction permettant de déconnecté un utilisateur et suppression du token et de l'userId dans le localStorage  */
   const logout = async () => {
     await axios({
       method: "get",

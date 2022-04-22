@@ -8,6 +8,7 @@ const SignInForm = () => {
   const [controlUsername, setControlUsername] = useState("");
   const [controlPassword, setControlPassword] = useState("");
 
+  /* fonction permettant la connexion au site + envoie de token si les infos données sont bonnes  */
   const handleLogin = (e) => {
     e.preventDefault();
     const usernameError = document.querySelector(".username.error");

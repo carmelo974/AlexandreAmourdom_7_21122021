@@ -13,6 +13,7 @@ const NewPostForm = () => {
 
   const dispatch = useDispatch();
 
+  /* fonction permettant d'ajouter du texte ou une image pour la création d'un post */
   const handlePost = async () => {
     if (post_content || postPicture) {
       const data = new FormData();
@@ -28,17 +29,20 @@ const NewPostForm = () => {
     }
   };
 
+  /*fonction permettant d'ajouter une image */
   const handlePicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
     setImage(e.target.files[0]);
   };
 
+  /* fonction permettant d'annuler l'envoie d'un post*/
   const cancelPost = () => {
     setPost_content("");
     setPostPicture("");
     setImage("");
   };
 
+  /*useEffect permettant de charger les info de l'utilisateur */
   useEffect(() => {
     if (!isEmpty(userData)) setIsLoading(false);
   }, [userData]);
@@ -51,10 +55,17 @@ const NewPostForm = () => {
         <>
           <NavLink exact to="/profil">
             <div className="user-info">
-              <img src={userData.data.user.picture} alt="user-img" />
+              <img
+                src={
+                  userData.data?.user.picture
+                    ? userData.data?.user.picture
+                    : "./img/user.png"
+                }
+                alt="user-pic"
+              />
             </div>
           </NavLink>
-          <div  className="post-form">
+          <div className="post-form">
             <textarea
               name="post_content"
               id="post_content"
@@ -65,7 +76,10 @@ const NewPostForm = () => {
             {post_content || postPicture ? (
               <li className="card-container">
                 <div className="card-left">
-                  <img src={userData.data.user.picture} alt="user-pic" />
+                  <img
+                    src={userData.data.user.picture || "./img/user.png"}
+                    alt="user-pic"
+                  />
                 </div>
                 <div className="card-right">
                   <div className="card-header">
@@ -82,7 +96,7 @@ const NewPostForm = () => {
               </li>
             ) : null}
             <div className="footer-form">
-              <div  className="icon">
+              <div className="icon">
                 <img src="./img/icons/icons8-image-40.png" alt="img-post" />
 
                 <input
@@ -93,7 +107,7 @@ const NewPostForm = () => {
                   onChange={(e) => handlePicture(e)}
                 />
               </div>
-              <div  className="btn-send">
+              <div className="btn-send">
                 {post_content || postPicture ? (
                   <button className="cancel" onClick={cancelPost}>
                     Annuler

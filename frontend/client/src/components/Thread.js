@@ -10,6 +10,7 @@ const Thread = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.postReducer);
 
+  /* useEffect permettant de recupérer les infos de l'utilisateur et les posts*/
   useEffect(() => {
     if (loadPost) {
       dispatch(getUsers());

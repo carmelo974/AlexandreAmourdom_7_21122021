@@ -9,9 +9,11 @@ import DeleteAccount from "./DeleteAccount";
 const UpdateProfil = () => {
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer);
+
   const dispatch = useDispatch();
   const [bio, setBio] = useState(userData.data?.user.bio);
 
+  /*fonction permettant de modifier la bio de l'utilisateur */
   const handleUpdate = () => {
     dispatch(updateBio(userData.data.user.id, bio));
     setUpdateForm(false);
@@ -24,7 +26,11 @@ const UpdateProfil = () => {
       <div className="update-container">
         <div className="left-part">
           <h3>Photo de profil</h3>
-          <img src={userData.data.user.picture} alt="user-pic" />
+          <img
+            src={userData.data.user.picture || "./img/user.png"}
+            alt="user-pic"
+          />
+
           <UploadImg />
         </div>
         <div className="right-part">

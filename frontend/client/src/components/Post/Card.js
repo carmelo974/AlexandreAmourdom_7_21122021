@@ -16,10 +16,7 @@ const Card = (props) => {
 
   const dispatch = useDispatch();
 
-  // const setStateComments = (state) => {
-  //   setShowComments(state);
-  // };
-
+  /* fonction permettant de modifier un post et de modifier le store  */
   const updateItem = () => {
     if (textUpdate) {
       dispatch(updatePost(props.post.id, textUpdate)).then(() =>
@@ -34,6 +31,7 @@ const Card = (props) => {
     setIsUpdated(false);
   };
 
+  /*useEffect permettant de charger les infos concernant l'utilisateur et le post */
   useEffect(() => {
     !isEmpty(usersData[0]) && setIsLoading(true);
   }, [usersData]);
@@ -46,8 +44,17 @@ const Card = (props) => {
         <>
           <div className="card-left">
             {usersData.data.map((user, idx) => {
-              if (user.id === props.post.userId)
-                return <img src={user.picture} alt="user_pic" key={idx} />;
+              if (user.id === props.post.userId) {
+                return (
+                  <img
+                    src={user.picture || "./img/user.png"}
+                    alt="user_pic"
+                    key={idx}
+                  />
+                );
+              } else {
+                return null;
+              }
             })}
           </div>
           <div className="card-right">
@@ -55,7 +62,11 @@ const Card = (props) => {
               <div className="pseudo">
                 <h3>
                   {usersData.data.map((user) => {
-                    if (user.id === props.post.userId) return user.username;
+                    if (user.id === props.post.userId) {
+                      return user.username;
+                    } else {
+                      return null;
+                    }
                   })}
                 </h3>
               </div>
@@ -85,7 +96,7 @@ const Card = (props) => {
             {(userData.data.user.id === props.post.userId ||
               userData.data.user.isAdmin === true) && (
               <div className="button-container">
-                <div onClick={() => setIsUpdated(!isUpdated)}>
+                <div tabIndex="0" onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="edit" />
                 </div>
                 <DeleteCard id={props.post.id} />
@@ -102,12 +113,7 @@ const Card = (props) => {
               </div>
               <img src="./img/partager.png" alt="share-pic" />
             </div>
-            {showComments && (
-              <CardComment
-                post={props.post}
-                // setShowComments={setShowComments}
-              />
-            )}
+            {showComments && <CardComment post={props.post} />}
           </div>
         </>
       )}

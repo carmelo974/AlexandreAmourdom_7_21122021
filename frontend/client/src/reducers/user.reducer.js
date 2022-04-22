@@ -30,7 +30,8 @@ export default function userReducer(state = initialState, action) {
       };
 
     case DELETE_ACCOUNT:
-      return state.filter((user) => user.id !== action.payload.userId);
+      console.log(state);
+      return state
     default:
       return state;
   }

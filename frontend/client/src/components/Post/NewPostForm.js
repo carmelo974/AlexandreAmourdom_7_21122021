@@ -69,6 +69,7 @@ const NewPostForm = () => {
             <textarea
               name="post_content"
               id="post_content"
+              aria-label="écriver votre post"
               placeholder="Quoi de neuf ?"
               onChange={(e) => setPost_content(e.target.value)}
               value={post_content}
@@ -90,7 +91,7 @@ const NewPostForm = () => {
                   </div>
                   <div className="content">
                     <p>{post_content}</p>
-                    <img src={postPicture} alt="" />
+                    <img src={postPicture} alt="post-picture" />
                   </div>
                 </div>
               </li>
@@ -100,6 +101,7 @@ const NewPostForm = () => {
                 <img src="./img/icons/icons8-image-40.png" alt="img-post" />
 
                 <input
+                  aria-label="image"
                   type="file"
                   id="file-upload"
                   name="file"
@@ -109,11 +111,15 @@ const NewPostForm = () => {
               </div>
               <div className="btn-send">
                 {post_content || postPicture ? (
-                  <button className="cancel" onClick={cancelPost}>
+                  <button aria-label="annuler" className="cancel" onClick={cancelPost}>
                     Annuler
                   </button>
                 ) : null}
-                <button className="send" onClick={handlePost}>
+                <button
+                  className="send"
+                  aria-label="Envoyer"
+                  onClick={handlePost}
+                >
                   Envoyer
                 </button>
               </div>

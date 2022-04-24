@@ -132,5 +132,4 @@ module.exports.signIn = (req, res) => {
 //logout user
 module.exports.logout = (_req, res) => {
   res.status(200).json({ message: "déconnecté" });
-  res.redirect("/");
 };

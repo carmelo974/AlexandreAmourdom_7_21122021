@@ -25,7 +25,7 @@ const DeleteCard = (props) => {
         }
       }}
     >
-      <img src="./img/icons/trash.svg" alt="poubelle" />
+      <img aria-label="supprimer" src="./img/icons/trash.svg" alt="poubelle" />
     </div>
   );
 };

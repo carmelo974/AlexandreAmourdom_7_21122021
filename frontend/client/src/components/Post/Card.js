@@ -79,8 +79,8 @@ const Card = (props) => {
                   defaultValue={props.post.post_content}
                   onChange={(e) => setTextUpdate(e.target.value)}
                 />
-                <div className="button-container">
-                  <button className="btn" onClick={updateItem}>
+                <div  className="button-container">
+                  <button aria-label="modifier" className="btn" onClick={updateItem}>
                     Valider modifications
                   </button>
                 </div>
@@ -96,7 +96,7 @@ const Card = (props) => {
             {(userData.data.user.id === props.post.userId ||
               userData.data.user.isAdmin === true) && (
               <div className="button-container">
-                <div tabIndex="0" onClick={() => setIsUpdated(!isUpdated)}>
+                <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="edit" />
                 </div>
                 <DeleteCard id={props.post.id} />

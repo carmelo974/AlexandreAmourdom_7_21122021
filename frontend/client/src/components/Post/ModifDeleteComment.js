@@ -73,7 +73,7 @@ const ModifDeleteComment = (props) => {
           />
           <br />
 
-          <button type="button" onClick={handleModif}>
+          <button aria-label="modifier" type="button" onClick={handleModif}>
             Valider vos modifications
           </button>
         </form>
@@ -87,7 +87,7 @@ const ModifDeleteComment = (props) => {
               }
             }}
           >
-            <img src="./img/icons/trash.svg" alt="delete" />
+            <img aria-label="supprimer" src="./img/icons/trash.svg" alt="delete" />
           </span>
         )}
       </div>

@@ -8,18 +8,21 @@ import Log from "../components/Log";
 import Thread from "../components/Thread";
 
 const Home = () => {
-
   const uid = useContext(UidContext);
- 
+
   return (
     <div className="home">
       <LeftNav />
       <div className="main">
         <div className="home-header">
-          {uid ? <NewPostForm /> : <Log signin={true} signup={false} />}
-          <Thread />
+          {uid ? (
+            <>
+              <NewPostForm /> <Thread />
+            </>
+          ) : (
+            <Log signin={true} signup={false} />
+          )}
         </div>
-        
       </div>
     </div>
   );
